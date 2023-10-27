@@ -1,0 +1,107 @@
+ext {
+    jibVersion = "2.7.1"
+    lombokVersion = "1.18.28"
+
+    mysqlVersion = "8.0.22"
+
+    springBootVersion = "2.3.3.RELEASE"
+    springCloudVersion = "Hoxton.SR8"
+    springCloudAlibabaVersion = "2.2.5.RELEASE"
+
+    springCloudSleuthVersion = "2.2.5.RELEASE"
+
+    springCloudZipkinVersion = "2.2.5.RELEASE"
+
+    springCloudConsulVersion = "2.2.4.RELEASE"
+
+    springCloudGatewayVersion = "2.2.5.RELEASE"
+
+    springCloudHystrixVersion = "2.2.5.RELEASE"
+
+    springCloudOpenFeignVersion = "2.2.5.RELEASE"
+
+    mybatisVersion = "2.1.4"
+
+    jacksonVersion = "2.11.2"
+
+    jwtVersion = "3.12.1"
+
+    orikaVersion = "1.5.4"
+
+    servletVersion = "4.0.1"
+
+    caffeineVersion = "2.8.8"
+
+    commonsLang3Version = "3.11"
+
+    commonsLoggingVersion = "1.2"
+
+    apacheHttpCoreVersion = "4.4.14"
+
+    guavaVersion = "32.1.2-jre"
+
+    httpclientVersion = "4.5.13"
+
+    gsonVersion = "2.8.6"
+
+    autoserviceVersion = "1.1.1"
+
+    fastjsonVersion = "1.2.83"
+
+    validationApiVersion = "2.0.1.Final"
+
+    jooqVersion = "3.18.6"
+
+}
+
+subprojects {
+    apply plugin: "java"
+    apply plugin: "idea"
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+    group "org.carl"
+    version "1.0.0"
+
+    repositories {
+        mavenLocal()
+        maven { url "https://maven.aliyun.com/repository/central" }
+        maven { url "https://maven.aliyun.com/repository/jcenter" }
+        jcenter()
+    }
+
+    dependencies {
+        implementation 'org.projectlombok:lombok:1.18.28'
+        annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    }
+
+}
+
+//subprojects{
+//    apply plugin: 'java'
+//    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+//    repositories {
+//        mavenLocal()
+//        maven { url "https://maven.aliyun.com/nexus/content/groups/public/" }
+//        mavenCentral()
+//    }
+//
+//    sourceCompatibility = 17
+//    targetCompatibility = 17
+//    dependencies {
+//        implementation 'org.projectlombok:lombok:1.18.28'
+//        annotationProcessor 'org.projectlombok:lombok:1.18.28'
+//        //导入lombok没有自动导入slf4j
+//        implementation 'org.slf4j:slf4j-api:1.7.32'
+//        implementation 'org.slf4j:slf4j-simple:1.7.32'
+//        implementation 'junit:junit:4.12'
+//        implementation 'cglib:cglib:3.3.0'
+//        implementation 'com.google.code.gson:gson:2.8.6'
+//        //自定义注解
+//        implementation 'com.google.auto.service:auto-service:1.1.1'
+//        annotationProcessor 'com.google.auto.service:auto-service:1.1.1'
+//    }
+//
+//}
+
