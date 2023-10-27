@@ -3,4 +3,4 @@
 /gradle/
 *.class
 /**/build
-*.bin
+/**/out
