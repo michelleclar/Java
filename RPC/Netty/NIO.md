@@ -36,6 +36,7 @@ position 变为读取位置
 clear 会覆盖写 
 compact 不会覆盖写
 ```
+
 >
 ### Selector
 > 多路复用(优化线程池思想) 采用响应式处理 NIO 表现为事件
