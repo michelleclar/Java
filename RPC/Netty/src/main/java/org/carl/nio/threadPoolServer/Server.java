@@ -5,72 +5,106 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
-import java.util.ArrayList;
+import java.nio.channels.*;
 import java.util.Iterator;
-import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.carl.bytebuffer.ByteBufferUtil.debugRead;
+import static org.carl.bytebuffer.ByteBufferUtil.debugAll;
 
 @Slf4j
 public class Server {
-
     public static void main(String[] args) throws IOException {
-        //管理channel
-        Selector sr = Selector.open();
-
+        Thread.currentThread().setName("boss");
         ServerSocketChannel ssc = ServerSocketChannel.open();
-        ssc.configureBlocking(false);//默认是true false 非阻塞 accept read 没有连接accept会直接返回空 read 返回0
-        //建立联系 通过key可以知道那个时间发生的事件
-        //事件类型 accept：连接请求事件 connect：客户端连接建立 read：可读 write：可写
-        SelectionKey sscKey = ssc.register(sr, 0, null);
-
-        sscKey.interestOps(SelectionKey.OP_ACCEPT);
-
+        ssc.configureBlocking(false);
+        Selector boss = Selector.open();
+        SelectionKey bossKey = ssc.register(boss, 0, null);
+        bossKey.interestOps(SelectionKey.OP_ACCEPT);
         ssc.bind(new InetSocketAddress(8080));
-        log.info("register key:{}", sscKey);
-        List<SocketChannel> channelList = new ArrayList<>();
-        while (true) {
-            sr.select(); //没有事件发生 线程阻塞 有事件 线程才会恢复
-            Iterator<SelectionKey> ite = sr.selectedKeys().iterator();
 
+        // 初始化工作线程：固定数量
+        Worker worker = new Worker("worker-0");
+        Worker[] workers = new Worker[Runtime.getRuntime().availableProcessors()];
+        for (int i = 0; i < workers.length; i++) {
+            workers[i] = new Worker("worker-" + "i");
+        }
+        AtomicInteger index = new AtomicInteger();
+        while (true) {
+            boss.select();
+            Iterator<SelectionKey> ite = boss.selectedKeys().iterator();
             while (ite.hasNext()) {
                 SelectionKey key = ite.next();
                 ite.remove();
-                int ops = key.readyOps();
-                log.info("key:{}", key);
-                switch (ops) {
-                    case SelectionKey.OP_ACCEPT -> {
+                if (key.isAcceptable()) {
+                    SocketChannel sc = ssc.accept();
+                    sc.configureBlocking(false);
+                    log.info("connected...{}", sc.getRemoteAddress());
+                    log.info("before register...{}", sc.getRemoteAddress());
+                    //关联
+//                    sc.register(worker.selector, SelectionKey.OP_READ, null);
+                    workers[index.getAndIncrement() % workers.length].register(sc);
+                    log.info("after register...{}", sc.getRemoteAddress());
 
-                        ServerSocketChannel channel = (ServerSocketChannel) key.channel();
-                        SocketChannel sc = channel.accept();
-                        log.info("{}", sc);
-                        sc.configureBlocking(false);
-                        ByteBuffer bf = ByteBuffer.allocate(16);
-                        SelectionKey scKey = sc.register(sr, 0, bf);
-                        scKey.interestOps(SelectionKey.OP_READ);
-                    }
-                    case SelectionKey.OP_READ -> {
-                        try {
-                            SocketChannel channel = (SocketChannel) key.channel();
-                            ByteBuffer bf = (ByteBuffer) key.attachment(); // 获取附件 key.attach():替换附件
-
-                            channel.read(bf); // 正常断开 返回值是 -1
-                            bf.flip();
-                            debugRead(bf);
-                        } catch (IOException e) {
-                            log.error("{}", e.getMessage());
-                            key.cancel();
-                        }
-                    }
                 }
-
-
             }
+        }
+
+    }
+
+    static class Worker implements Runnable {
+        private final Selector selector;
+
+        private final ConcurrentLinkedQueue<Runnable> queue = new ConcurrentLinkedQueue<>();
+
+        public Worker(String name) throws IOException {
+            Thread thread = new Thread(this, name);
+            selector = Selector.open();
+            thread.start();
 
         }
+
+        public void register(SocketChannel sc) throws IOException {
+            queue.add(() -> {
+                try {
+                    sc.register(selector, SelectionKey.OP_READ, null);
+                } catch (ClosedChannelException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            selector.wakeup();
+
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    selector.select();
+                    Runnable task = queue.poll();
+                    if (task != null) {
+                        task.run();
+                    }
+                    Iterator<SelectionKey> ite = selector.selectedKeys().iterator();
+                    while (ite.hasNext()) {
+                        SelectionKey key = ite.next();
+                        ite.remove();
+                        if (key.isReadable()) {
+
+                            ByteBuffer buffer = ByteBuffer.allocate(16);
+                            SocketChannel channel = (SocketChannel) key.channel();
+                            log.info("read...{}", channel.getRemoteAddress());
+                            channel.read(buffer);
+                            buffer.flip();
+                            debugAll(buffer);
+
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
+
 }

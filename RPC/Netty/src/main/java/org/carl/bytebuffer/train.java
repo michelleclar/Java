@@ -1,9 +1,6 @@
 package org.carl.bytebuffer;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-
-import static org.carl.bytebuffer.ByteBufferUtil.debugAll;
 
 public class train {
 
