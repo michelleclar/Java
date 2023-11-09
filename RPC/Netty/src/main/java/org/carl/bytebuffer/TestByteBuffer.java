@@ -88,6 +88,7 @@ public class TestByteBuffer {
         ByteBuffer.wrap("hello".getBytes());
         //ByteBuffer ----> String
         String string = StandardCharsets.UTF_8.decode(bf).toString();
+        Charset.defaultCharset().encode("hello");
 
     }
 
@@ -105,13 +106,13 @@ public class TestByteBuffer {
         }
     }
 
-    public static void gathering(String path){
+    public static void gathering(String path) {
         ByteBuffer a = StandardCharsets.UTF_8.encode("hello");
         ByteBuffer b = StandardCharsets.UTF_8.encode("hello");
         ByteBuffer c = StandardCharsets.UTF_8.encode("hello");
 
         try (FileChannel channel = new RandomAccessFile(path, "rw").getChannel()) {
-            channel.write(new ByteBuffer[]{a,b,c});
+            channel.write(new ByteBuffer[]{a, b, c});
         } catch (IOException e) {
         }
 

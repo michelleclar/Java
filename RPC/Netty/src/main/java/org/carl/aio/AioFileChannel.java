@@ -1,6 +1,9 @@
 package org.carl.aio;
 
-import lombok.extern.slf4j.Slf4j;
+
+import org.carl.netty.eventloop.EventLoopServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -11,8 +14,8 @@ import java.nio.file.StandardOpenOption;
 
 import static org.carl.bytebuffer.ByteBufferUtil.debugAll;
 
-@Slf4j
 public class AioFileChannel {
+    private static final Logger log = LoggerFactory.getLogger(AioFileChannel.class);
     public static void main(String[] args) {
         try (AsynchronousFileChannel channel = AsynchronousFileChannel.open(Paths.get("data.txt"), StandardOpenOption.READ)) {
             //1ByteBuffer 2读取位置 3附件 4回调对象

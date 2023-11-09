@@ -1,6 +1,7 @@
 package org.carl.nio.threadPoolServer;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -12,8 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.carl.bytebuffer.ByteBufferUtil.debugAll;
 
-@Slf4j
+
 public class Server {
+    static final Logger log = LoggerFactory.getLogger(org.carl.nio.selectorServer.Server.class);
     public static void main(String[] args) throws IOException {
         Thread.currentThread().setName("boss");
         ServerSocketChannel ssc = ServerSocketChannel.open();
@@ -24,10 +26,9 @@ public class Server {
         ssc.bind(new InetSocketAddress(8080));
 
         // 初始化工作线程：固定数量
-        Worker worker = new Worker("worker-0");
         Worker[] workers = new Worker[Runtime.getRuntime().availableProcessors()];
         for (int i = 0; i < workers.length; i++) {
-            workers[i] = new Worker("worker-" + "i");
+            workers[i] = new Worker("worker-" + i);
         }
         AtomicInteger index = new AtomicInteger();
         while (true) {

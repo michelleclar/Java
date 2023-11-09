@@ -16,10 +16,10 @@ public class TestFileChannel {
     public static void walkFileTree() throws IOException {
         AtomicInteger dirCount = new AtomicInteger();
         AtomicInteger fileCount = new AtomicInteger();
-        Files.walkFileTree(Paths.get("/home/carl/.jdks/corretto-17.0.8.1"),new SimpleFileVisitor<>(){
+        Files.walkFileTree(Paths.get("/home/carl/.jdks/corretto-17.0.8.1"), new SimpleFileVisitor<>() {
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                System.out.println("------>"+dir);
+                System.out.println("------>" + dir);
                 dirCount.incrementAndGet();
                 return super.preVisitDirectory(dir, attrs);
             }
@@ -41,16 +41,16 @@ public class TestFileChannel {
             //效率高 0 拷贝 优化 文件数据有上限（2G）
             long size = from.size();
             long len = size;
-            while (len>0){
-                len -= from.transferTo(size-len, len, to);
+            while (len > 0) {
+                len -= from.transferTo(size - len, len, to);
             }
         } catch (IOException e) {
         }
     }
 
-    public static void path(){
+    public static void path() {
         //支持. ..
         Paths.get("data.txt"); //相对路径 user.dir
-        Paths.get("Netty","projects"); //相对路径 user.dir
+        Paths.get("Netty", "projects"); //相对路径 user.dir
     }
 }

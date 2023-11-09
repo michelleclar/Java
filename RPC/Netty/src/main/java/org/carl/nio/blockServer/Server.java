@@ -1,7 +1,8 @@
 package org.carl.nio.blockServer;
 
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -13,8 +14,8 @@ import java.util.List;
 
 import static org.carl.bytebuffer.ByteBufferUtil.debugRead;
 
-@Slf4j
 public class Server {
+    private static final Logger log = LoggerFactory.getLogger(Server.class);
 
     public static void main(String[] args) throws IOException {
         //阻塞模式 单线程
