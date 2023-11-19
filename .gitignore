@@ -1,6 +1,7 @@
 /.idea/
 /**/.gradle/
 *.class
+/gradle/wrapper/gradle-wrapper.jar
 /**/build
 /**/out
 /**/generated/
