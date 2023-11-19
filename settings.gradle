@@ -4,7 +4,6 @@ plugins {
 rootProject.name = 'Java'
 include 'Jdk-21'
 include 'Jdk-17'
-include 'Jdk-11'
 include 'RPC'
 include 'RPC:Netty'
 findProject(':RPC:Netty')?.name = 'Netty'
