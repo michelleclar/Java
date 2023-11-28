@@ -88,3 +88,11 @@ static void invokeChannelRead(final AbstractChannelHandlerContext next, Object m
 > * pipline()添加处理器
 > * write()将数据写入
 > * writeAndFlush()将数据写入并刷出
+
+
+
+
+```text
+netty 提升的是吞吐量，将任务进行拆分，多个线程执行同一个task
+
+```
