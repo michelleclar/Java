@@ -5,6 +5,5 @@ rootProject.name = 'Java'
 include 'Jdk-21'
 include 'Jdk-17'
 include 'RPC'
-include 'RPC:Netty'
-findProject(':RPC:Netty')?.name = 'Netty'
+include 'Netty'
 
