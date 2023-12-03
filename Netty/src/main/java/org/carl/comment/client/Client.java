@@ -17,8 +17,8 @@ public class Client {
             bootstrap.channel(NioSocketChannel.class);
             bootstrap.group(worker);
             bootstrap.handler(handle);
-            ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 8080).sync();
-            channelFuture.channel().closeFuture().sync();
+            Channel channel = bootstrap.connect("127.0.0.1", 8080).sync().channel();
+            channel.closeFuture().sync();
 
         } catch (InterruptedException e) {
             log.error("client error", e);

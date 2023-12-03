@@ -74,7 +74,6 @@ public class Server {
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.channel(NioServerSocketChannel.class);
-            serverBootstrap.option(ChannelOption.SO_RCVBUF, 5);
             serverBootstrap.group(boss, worker);
 
             serverBootstrap.childHandler(initializer);

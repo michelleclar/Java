@@ -1,12 +1,11 @@
-package org.carl.protocol;
+package org.carl.chat.protocol;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
 import lombok.extern.slf4j.Slf4j;
-import org.carl.protocol.message.Message;
-
+import org.carl.chat.message.Message;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

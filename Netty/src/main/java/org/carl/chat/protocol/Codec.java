@@ -1,37 +1,36 @@
-package org.carl.protocol;
+package org.carl.chat.protocol;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToMessageCodec;
+import io.netty.handler.codec.ByteToMessageCodec;
 import lombok.extern.slf4j.Slf4j;
 import org.carl.protocol.message.Message;
-
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
-
 @Slf4j
-@ChannelHandler.Sharable
-public class CodecSharable extends MessageToMessageCodec<ByteBuf, Message> {
+public class Codec extends ByteToMessageCodec<Message> {
     @Override
-    protected void encode(ChannelHandlerContext ctx, Message msg, List<Object> outL) throws Exception {
-        ByteBuf out = ctx.alloc().buffer();
+    protected void encode(ChannelHandlerContext ctx, Message msg, ByteBuf out) throws Exception {
         // 魔术
         out.writeBytes(new byte[]{'c', 'a', 'r', 'l'});
         // 版本
         out.writeByte(1);
+
         //序列化
         out.writeByte(0);
+
         //指令类型
         out.writeByte(msg.getMessageType());
+
         //请求序列（全双工 异步）
         out.writeInt(msg.getSequenceId());
         //对齐填充
         out.writeByte(0xff);
+
         //字节数组
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(bos);
@@ -39,9 +38,9 @@ public class CodecSharable extends MessageToMessageCodec<ByteBuf, Message> {
         byte[] bytes = bos.toByteArray();
         //消息长度
         out.writeInt(bytes.length);
+
         //写入内容
         out.writeBytes(bytes);
-        outL.add(out);
     }
 
     @Override

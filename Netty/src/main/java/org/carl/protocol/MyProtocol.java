@@ -48,6 +48,8 @@ public class MyProtocol {
             Client.send(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
+
+                    ch.pipeline().addLast(new LengthFieldBasedFrameDecoder(1024, 12, 4, 0, 0));
                     ch.pipeline().addLast(new Codec());
                     ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
                         @Override
