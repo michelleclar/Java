@@ -47,7 +47,8 @@ public interface Serializer {
             @Override
             public <T> T deserialize(Class<T> clazz, byte[] bytes) {
                 Gson gson = new GsonBuilder().registerTypeAdapter(Class.class, new Serializer.ClassCodec())
-                        .registerTypeAdapterFactory(ThrowableAdapterFactory.INSTANCE).create();
+//                        .registerTypeAdapter(Exception.class,new ExceptionSerializer())
+                        .create();
                 String json = new String(bytes, StandardCharsets.UTF_8);
                 return gson.fromJson(json, clazz);
             }
@@ -55,7 +56,8 @@ public interface Serializer {
             @Override
             public <T> byte[] serialize(T object) {
                 Gson gson = new GsonBuilder().registerTypeAdapter(Class.class, new Serializer.ClassCodec())
-                        .registerTypeAdapterFactory(ThrowableAdapterFactory.INSTANCE).create();
+//                        .registerTypeAdapter(Exception.class,new ExceptionSerializer())
+                        .create();
                 String json = gson.toJson(object);
                 return json.getBytes(StandardCharsets.UTF_8);
             }
@@ -80,6 +82,18 @@ public interface Serializer {
             return new JsonPrimitive(src.getName());
         }
     }
+    class ExceptionSerializer implements JsonSerializer<Exception>
+    {
+        @Override
+        public JsonElement serialize(Exception src, Type typeOfSrc, JsonSerializationContext context)
+        {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add("cause", new JsonPrimitive(String.valueOf(src.getCause())));
+            jsonObject.add("message", new JsonPrimitive(src.getMessage()));
+            jsonObject.add("detailMessage",new JsonPrimitive(src.getMessage()));
+            return jsonObject;
+        }
+    }
 
     class ThrowableAdapterFactory implements TypeAdapterFactory {
         private ThrowableAdapterFactory() {
@@ -98,7 +112,9 @@ public interface Serializer {
             TypeAdapter<T> adapter = (TypeAdapter<T>) new TypeAdapter<Throwable>() {
                 @Override
                 public Throwable read(JsonReader in) throws IOException {
-                    throw new UnsupportedOperationException();
+                    System.out.println(in.toString());
+                    return null;
+//                    throw new UnsupportedOperationException();
                 }
 
                 @Override

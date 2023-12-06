@@ -111,3 +111,4 @@ ByteBuf buffer = ByteBufAllocator.DEFAULT.directBuffer(10);
 > 
 > 
 > Netty 源码大多数都是final 修饰的类 无法继承
+> --add-opens java.base/java.lang=ALL-UNNAMED jvm 解决gson 不能反射 异常类

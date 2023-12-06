@@ -32,7 +32,7 @@ public class RpcRequestMessageHandler extends SimpleChannelInboundHandler<RpcReq
             e.printStackTrace();
             String msg = e.getCause().getMessage();
             log.error("error,{}", msg);
-//            response.setExceptionValue(new Exception("远程调用出错:" + msg));
+            response.setExceptionValue(new Exception("远程调用出错:" + msg));
         }
         ChannelFuture channelFuture = ctx.writeAndFlush(response);
         channelFuture.addListener(promise -> {
