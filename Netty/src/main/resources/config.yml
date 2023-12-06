@@ -1,0 +1,6 @@
+server:
+  port: 8080
+  serializer:
+    algorithm: Json
+  services:
+    org.carl.chat.server.service.HelloService: org.carl.chat.server.service.HelloServiceImpl

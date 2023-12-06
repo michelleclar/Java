@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
 import lombok.extern.slf4j.Slf4j;
+import org.carl.chat.config.Config;
 import org.carl.chat.message.Message;
 
 import java.io.ByteArrayInputStream;
@@ -24,7 +25,7 @@ public class CodecSharable extends MessageToMessageCodec<ByteBuf, Message> {
         // 版本
         out.writeByte(1);
         //序列化
-        out.writeByte(0);
+        out.writeByte(Config.getSerializerAlgorithm().ordinal());
         //指令类型
         out.writeByte(msg.getMessageType());
         //请求序列（全双工 异步）
@@ -32,10 +33,7 @@ public class CodecSharable extends MessageToMessageCodec<ByteBuf, Message> {
         //对齐填充
         out.writeByte(0xff);
         //字节数组
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(bos);
-        oos.writeObject(msg);
-        byte[] bytes = bos.toByteArray();
+        byte[] bytes = Config.getSerializerAlgorithm().serialize(msg);
         //消息长度
         out.writeInt(bytes.length);
         //写入内容
@@ -54,12 +52,11 @@ public class CodecSharable extends MessageToMessageCodec<ByteBuf, Message> {
         int length = in.readInt();
         byte[] bytes = new byte[length];
         in.readBytes(bytes, 0, length);
-        if (serializerType == 0) {
-            ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
-            Message m = (Message) ois.readObject();
-            log.debug("{}, {}, {}, {}, {},{}", i, v, serializerType, messageType, sequenceId, length);
-            log.debug("{}", m);
-            out.add(m);
-        }
+        Serializer.Algorithm values = Serializer.Algorithm.values()[serializerType];
+        Class<? extends Message> messageClass = Message.getMessageClass(messageType);
+        Message m = values.deserialize(messageClass, bytes);
+        log.debug("{}, {}, {}, {}, {},{}", i, v, serializerType, messageType, sequenceId, length);
+        log.debug("{}", m);
+        out.add(m);
     }
 }

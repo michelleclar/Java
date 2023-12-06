@@ -15,15 +15,17 @@ public class Client {
         try {
             Bootstrap bootstrap = new Bootstrap();
             bootstrap.channel(NioSocketChannel.class);
+            bootstrap.option(ChannelOption.CONNECT_TIMEOUT_MILLIS,300); //serverSocket channel
+//            bootstrap.option(ChannelOption.SO_BACKLOG,200);
             bootstrap.group(worker);
             bootstrap.handler(handle);
             Channel channel = bootstrap.connect("127.0.0.1", 8080).sync().channel();
-            channel.closeFuture().sync();
-
+            // 异步
+            channel.closeFuture().addListener(future->{
+                worker.shutdownGracefully();
+            });
         } catch (InterruptedException e) {
             log.error("client error", e);
-        } finally {
-            worker.shutdownGracefully();
         }
     }
     public static void send(ChannelHandler... handlers) {

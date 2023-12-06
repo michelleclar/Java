@@ -1,13 +1,15 @@
 package org.carl.chat.server.handler;
 
-import cn.itcast.message.RpcRequestMessage;
-import cn.itcast.message.RpcResponseMessage;
-import cn.itcast.server.service.HelloService;
-import cn.itcast.server.service.ServicesFactory;
+
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.carl.chat.message.RpcRequestMessage;
+import org.carl.chat.message.RpcResponseMessage;
+import org.carl.chat.server.service.HelloService;
+import org.carl.chat.server.service.ServicesFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,15 +31,22 @@ public class RpcRequestMessageHandler extends SimpleChannelInboundHandler<RpcReq
         } catch (Exception e) {
             e.printStackTrace();
             String msg = e.getCause().getMessage();
-            response.setExceptionValue(new Exception("远程调用出错:" + msg));
+            log.error("error,{}", msg);
+//            response.setExceptionValue(new Exception("远程调用出错:" + msg));
         }
-        ctx.writeAndFlush(response);
+        ChannelFuture channelFuture = ctx.writeAndFlush(response);
+        channelFuture.addListener(promise -> {
+            if (!promise.isSuccess()) {
+                Throwable cause = promise.cause();
+                log.error("error,{}", cause.getMessage());
+            }
+        });
     }
 
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         RpcRequestMessage message = new RpcRequestMessage(
                 1,
-                "cn.itcast.server.service.HelloService",
+                "org.carl.chat.server.service.HelloService",
                 "sayHello",
                 String.class,
                 new Class[]{String.class},

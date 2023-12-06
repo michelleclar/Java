@@ -1,12 +1,13 @@
 package org.carl.chat.server.handler;
 
-import cn.itcast.message.GroupJoinResponseMessage;
-import cn.itcast.message.GroupQuitRequestMessage;
-import cn.itcast.server.session.Group;
-import cn.itcast.server.session.GroupSessionFactory;
+
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import org.carl.chat.message.GroupJoinResponseMessage;
+import org.carl.chat.message.GroupQuitRequestMessage;
+import org.carl.chat.server.session.Group;
+import org.carl.chat.server.session.GroupSessionFactory;
 
 @ChannelHandler.Sharable
 public class GroupQuitRequestMessageHandler extends SimpleChannelInboundHandler<GroupQuitRequestMessage> {

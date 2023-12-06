@@ -1,4 +1,4 @@
-package org.carl.chat;
+package protocol;
 
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -17,6 +17,7 @@ import org.carl.chat.protocol.ProtocolFrameDecoder;
 import org.carl.chat.server.handler.LoginRequestMessageHandler;
 import org.carl.comment.client.Client;
 import org.carl.comment.server.Server;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -24,19 +25,10 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-/**
- * 魔数，用来在第一时间判定是否是无效数据包
- * 版本号，可以支持协议的升级
- * 序列化算法，消息正文到底采用哪种序列化反序列化方式，可以由此扩展，例如：json、protobuf、hessian、jdk
- * 指令类型，是登录、注册、单聊、群聊... 跟业务相关
- * 请求序号，为了双工通信，提供异步能力
- * 正文长度
- * 消息正文
- */
 @Slf4j
-public class Test {
-    public static void main(String[] args) {
+public class TestCodec {
+    @Test
+    public void testSerialize(){
 
         new Thread(() -> {
             Server.start(new ChannelInitializer<SocketChannel>() {
@@ -157,5 +149,4 @@ public class Test {
             });
         }).start();
     }
-
 }

@@ -1,11 +1,12 @@
 package org.carl.chat.server.handler;
 
-import cn.itcast.message.GroupMembersRequestMessage;
-import cn.itcast.message.GroupMembersResponseMessage;
-import cn.itcast.server.session.GroupSessionFactory;
+
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import org.carl.chat.message.GroupMembersRequestMessage;
+import org.carl.chat.message.GroupMembersResponseMessage;
+import org.carl.chat.server.session.GroupSessionFactory;
 
 import java.util.Set;
 
