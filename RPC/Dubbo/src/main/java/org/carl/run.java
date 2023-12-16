@@ -49,7 +49,7 @@ public class run {
                             "Application '{}' is running! Access URLs:\n\t" +
                             "Local: \t\thttp://localhost:{}\n\t" +
                             "External: \thttp://{}:{}\n---------------------------------------------------------------------------------",
-                    applicationName,
+                    applicationName == null ? "default" : applicationName,
                     serverPort,
                     hostAddress, serverPort);
 

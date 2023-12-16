@@ -14,7 +14,12 @@ public class BufUtil {
         int i = byteBuf.readableBytes();
         int rows = i / 16 + (i%15 == 0 ? 0:1) + 4;
         StringBuilder buf = new StringBuilder(rows * 80 * 2)
-                .append("read index:").append(byteBuf.readerIndex()) .append(" write index:").append(byteBuf.writerIndex()) .append(" capacity:").append(byteBuf.capacity()) .append(NEWLINE);
+                .append("read index:")
+                .append(byteBuf.readerIndex())
+                .append(" write index:")
+                .append(byteBuf.writerIndex())
+                .append(" capacity:")
+                .append(byteBuf.capacity()) .append(NEWLINE);
         appendPrettyHexDump(buf,byteBuf);
         System.out.println(buf);
     }
