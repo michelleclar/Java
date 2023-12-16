@@ -22,6 +22,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.22' // annotationProcessor代表main下代码的注解执行器
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'// testAnnotationProcessor代表test下代码的注解执行器
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22' // compile代表编译时使用的lombok
+    implementation 'org.apache.dubbo:dubbo:3.2.8'
 }
 
 test {

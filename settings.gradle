@@ -6,6 +6,5 @@ include 'Jdk-21'
 include 'Jdk-17'
 include 'RPC'
 include 'Netty'
-include 'RPC:Dubbo'
-findProject(':RPC:Dubbo')?.name = 'Dubbo'
+include 'Dubbo'
 
