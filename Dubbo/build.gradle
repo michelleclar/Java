@@ -1,30 +1,49 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '3.2.0' apply false
-
+    id 'org.springframework.boot' version '2.7.8'
 }
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'io.spring.dependency-management'
+ext {
+    springBootVersion = '2.7.8'
+    dubboVersion = '3.2.0-beta.4'
+}
 
-dependencyManagement {
-    imports {
-        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'org.apache.dubbo'
+    version = '1.0-SNAPSHOT'
+    sourceCompatibility = 17
+    targetCompatibility = 17
+
+    repositories {
+        mavenCentral()
     }
-}
-dependencies {
-//    implementation('org.springframework.boot:spring-boot-starter-web')
-//    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
-    implementation('org.springframework.boot:spring-boot-starter-web') {
-        exclude group: 'org.springframework.security', module: 'spring-security-config'
-    }
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    annotationProcessor 'org.projectlombok:lombok:1.18.22' // annotationProcessor代表main下代码的注解执行器
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'// testAnnotationProcessor代表test下代码的注解执行器
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22' // compile代表编译时使用的lombok
-    implementation 'org.apache.dubbo:dubbo:3.2.8'
-}
 
-test {
-    useJUnitPlatform()
+    dependencies {
+        implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+        implementation platform("org.apache.dubbo:dubbo-bom:${dubboVersion}")
+        implementation ("org.apache.dubbo:dubbo-dependencies-zookeeper-curator5:3.2.0-beta.4") {
+            exclude group: 'org.slf4j', module: 'slf4j-reload4j'
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+            mavenBom "org.apache.dubbo:dubbo-bom:${dubboVersion}"
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    jar {
+        enabled = true
+    }
+
+    bootJar {
+        enabled = true
+    }
 }
