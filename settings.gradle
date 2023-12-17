@@ -6,12 +6,6 @@ include 'Jdk-21'
 include 'Jdk-17'
 include 'RPC'
 include 'Netty'
-//include 'Dubbo'
 include 'SpringBoot'
-include 'Dubbo:dubbo-spring-boot-interface'
-findProject(':Dubbo:dubbo-spring-boot-interface')?.name = 'dubbo-spring-boot-interface'
-include 'Dubbo:dubbo-spring-boot-provider'
-findProject(':Dubbo:dubbo-spring-boot-provider')?.name = 'dubbo-spring-boot-provider'
-include 'Dubbo:dubbo-spring-boot-consumer'
-findProject(':Dubbo:dubbo-spring-boot-consumer')?.name = 'dubbo-spring-boot-consumer'
+
 

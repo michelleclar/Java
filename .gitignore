@@ -21,3 +21,5 @@ RPC/.classpath
 RPC/.factorypath
 RPC/.project
 .project
+/**/target
+/**/out

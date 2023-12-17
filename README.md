@@ -14,3 +14,7 @@ Java 学习代码
 分布式： 解耦
 QPS
 TPS
+pom --> build.gradle
+gradle init --type pom
+
+build.gradle ---> pom.xml
