@@ -16,7 +16,6 @@ public class Task implements CommandLineRunner {
     public void run(String... args) throws Exception {
         String result = service.sayHello("world");
         System.out.println("Receive result ======> " + result);
-        int[] a = new int[10];
         new Thread(()-> {
             while (true) {
                 try {
