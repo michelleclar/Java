@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.carl'
+version = 'unspecified'
+
+    repositories {
+        mavenLocal()
+        maven { url "https://maven.aliyun.com/repository/central" }
+        maven { url "https://maven.aliyun.com/repository/jcenter" }
+        jcenter()
+    }
+
+
+
+dependencies {
+}
+
+test {
+    useJUnitPlatform()
+}

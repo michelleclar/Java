@@ -2,7 +2,6 @@ package protocol;
 
 import com.google.gson.*;
 import org.carl.chat.message.RpcResponseMessage;
-import org.carl.chat.protocol.Serializer;
 
 import java.lang.reflect.Type;
 
