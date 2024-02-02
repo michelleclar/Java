@@ -11,7 +11,7 @@ Jdk-17/.project
 Jdk-21/.classpath
 Jdk-21/.factorypath
 Jdk-21/.project
-Jdk-17/.classpath
+/**/.classpath
 Netty/.classpath
 Netty/.factorypath
 Netty/.project
@@ -23,3 +23,5 @@ RPC/.project
 .project
 /**/target
 /**/out
+Dubbo/dubbo-spring-boot-interface/.classpath
+Dubbo/dubbo-spring-boot-interface/.classpath
