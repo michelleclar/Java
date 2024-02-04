@@ -25,3 +25,4 @@ RPC/.project
 /**/out
 Dubbo/dubbo-spring-boot-interface/.classpath
 Dubbo/dubbo-spring-boot-interface/.classpath
+/**/bin
