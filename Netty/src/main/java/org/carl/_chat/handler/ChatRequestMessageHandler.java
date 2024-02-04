@@ -2,7 +2,7 @@ package org.carl._chat.handler;
 
 
 import org.carl._chat.message.ChatRequestMessage;
-import org.carl.chat.message.ChatResponseMessage;
+import org.carl._chat.message.ChatResponseMessage;
 import org.carl.chat.server.session.SessionFactory;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
