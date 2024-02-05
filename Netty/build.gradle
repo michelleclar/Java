@@ -9,22 +9,10 @@ dependencies {
     implementation 'org.yaml:snakeyaml:2.2'
     testImplementation 'ch.qos.logback:logback-classic:1.4.11'
     testImplementation 'org.projectlombok:lombok:1.18.28'// log
-    compileOnly 'io.grpc:grpc-netty-shaded:1.61.0'
-    compileOnly 'io.grpc:grpc-protobuf:1.61.0'
-    compileOnly 'io.grpc:grpc-stub:1.61.0'
+    implementation 'io.grpc:grpc-netty-shaded:1.61.0'
+    implementation 'io.grpc:grpc-protobuf:1.61.0'
+    implementation 'io.grpc:grpc-stub:1.61.0'
 }
-
-//buildscript {
-//    repositories {
-//        mavenLocal()
-//        maven { url 'https://maven.aliyun.com/repository/central' }
-//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-//        jcenter()
-//    }
-//    dependencies {
-//        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.9.4'
-//    }
-//}
 
 protobuf {
     protoc {
@@ -42,22 +30,23 @@ protobuf {
     }
 }
 
-sourceSets {
-    main {
-        proto {
-            // 默认'src/main/proto'，可再定义其它目录
-            srcDir 'src/main/protobuf'
-            srcDir 'src/main/protocolbuffers'
-            // 默认后缀名为.proto，不建议修改
-            include '**/*.protodevel'
-        }
-        java {
-            srcDirs 'build/generated/sources/protobuf/'
-        }
-    }
-    test {
-        proto {
-            srcDir 'src/test/protocolbuffers'
-        }
-    }
-}
+//sourceSets {
+//    main {
+//        proto {
+//            // 默认'src/main/proto'，可再定义其它目录
+//            srcDir 'src/main/protobuf'
+//            srcDir 'src/main/protocolbuffers'
+//            // 默认后缀名为.proto，不建议修改
+//            include '**/*.proto'
+//        }
+//        java {
+//          srcDirs 'src/main/proto'
+//            srcDirs 'build/generated/sources/protobuf/'
+//        }
+//    }
+//    test {
+//        proto {
+//            srcDir 'src/test/protocolbuffers'
+//        }
+//    }
+//}
