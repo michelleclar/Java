@@ -17,7 +17,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
-import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import java.net.InetSocketAddress;
 import lombok.extern.slf4j.Slf4j;
