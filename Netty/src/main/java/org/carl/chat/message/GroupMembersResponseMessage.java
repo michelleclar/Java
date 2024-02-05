@@ -1,11 +1,13 @@
 package org.carl.chat.message;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @ToString(callSuper = true)
 public class GroupMembersResponseMessage extends Message {
 

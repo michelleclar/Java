@@ -1,3 +1,7 @@
+plugins {
+    id 'com.google.protobuf' version '0.9.4'
+    id 'java'
+}
 dependencies {
     implementation 'io.netty:netty-all:4.1.100.Final' // core
     implementation 'com.google.code.gson:gson:2.10.1' // json
@@ -5,10 +9,55 @@ dependencies {
     implementation 'org.yaml:snakeyaml:2.2'
     testImplementation 'ch.qos.logback:logback-classic:1.4.11'
     testImplementation 'org.projectlombok:lombok:1.18.28'// log
-
+    compileOnly 'io.grpc:grpc-netty-shaded:1.61.0'
+    compileOnly 'io.grpc:grpc-protobuf:1.61.0'
+    compileOnly 'io.grpc:grpc-stub:1.61.0'
 }
 
-test {
-    useJUnitPlatform()
+//buildscript {
+//    repositories {
+//        mavenLocal()
+//        maven { url 'https://maven.aliyun.com/repository/central' }
+//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+//        jcenter()
+//    }
+//    dependencies {
+//        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.9.4'
+//    }
+//}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.25.2'
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.61.0'
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc { }
+        }
+    }
 }
 
+sourceSets {
+    main {
+        proto {
+            // 默认'src/main/proto'，可再定义其它目录
+            srcDir 'src/main/protobuf'
+            srcDir 'src/main/protocolbuffers'
+            // 默认后缀名为.proto，不建议修改
+            include '**/*.protodevel'
+        }
+        java {
+            srcDirs 'build/generated/sources/protobuf/'
+        }
+    }
+    test {
+        proto {
+            srcDir 'src/test/protocolbuffers'
+        }
+    }
+}

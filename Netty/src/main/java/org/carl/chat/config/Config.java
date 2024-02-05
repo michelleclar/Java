@@ -4,6 +4,7 @@ package org.carl.chat.config;
 import org.carl.chat.protocol.Serializer;
 import org.yaml.snakeyaml.Yaml;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -40,8 +41,12 @@ public abstract class Config {
             try {
                 instanceClass = Class.forName(v);
                 interfaceClass = Class.forName(k);
-                map.put(interfaceClass, instanceClass.newInstance());
+                map.put(interfaceClass, instanceClass.getDeclaredConstructor().newInstance());
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
+            } catch (NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
 

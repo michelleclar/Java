@@ -1,12 +1,14 @@
 package org.carl.protocol.message;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
  * @author yihang
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 @ToString(callSuper = true)
 public class RpcResponseMessage extends Message {
     /**

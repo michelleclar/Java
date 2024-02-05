@@ -41,7 +41,6 @@ public class App {
                             System.out.println(msg);
                           }
                         });
-            ch.pipeline().addLast()
               }
             })
         .bind(chatConfig.getPort());
