@@ -1,9 +1,5 @@
 package org.carl._chat;
 
-import com.google.protobuf.ByteString;
-import com.google.protobuf.CodedOutputStream;
-import com.google.protobuf.MessageLite;
-import com.google.protobuf.Parser;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -19,12 +15,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
-import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.util.concurrent.GlobalEventExecutor;
-
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import lombok.extern.slf4j.Slf4j;
 import org.carl._chat.handler.MessageHandler;
@@ -55,19 +46,8 @@ public class App {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
                       ChannelPipeline pipeline = ch.pipeline();
-                      // pipeline.addLast("encoder", new ProtobufEncoder()); // protobuf 编码器
 
-                      pipeline.addLast(new Codec());
-                      // pipeline.addLast(
-                      // "decoder user", new ProtobufDecoder(Proto.User.getDefaultInstance()));
-                      // pipeline.addLast(
-                      // "decoder message",
-                      // new ProtobufDecoder(Proto.Message.getDefaultInstance()));
-                      // pipeline.addLast(
-                      // "decoder ping", new ProtobufDecoder(Proto.Ping.getDefaultInstance()));
-                      // pipeline.addLast(
-                      // "decoder pong", new ProtobufDecoder(Proto.pong.getDefaultInstance()));
-                      // pipeline.addLast("message handle", new MessageHandler());
+                      pipeline.addLast("编解码", new Codec());
 
                       pipeline.addLast(new NettyClientHandler());
                     }
@@ -100,22 +80,8 @@ public class App {
                     protected void initChannel(NioSocketChannel ch) {
 
                       ChannelPipeline pipeline = ch.pipeline();
-                     pipeline.addLast(new Codec());
-                      // pipeline.addLast("encoder", new ProtobufEncoder());
-
-                       // pipeline.addLast("decoder", new ProtobufDecoder(Proto.User.getDefaultInstance()));
-                      // ch.pipeline()
-                      // .addLast(
-                      // "decoder message",
-                      // new ProtobufDecoder(Proto.Message.getDefaultInstance()));
-                      // ch.pipeline()
-                      // .addLast(
-                      // "decoder ping", new ProtobufDecoder(Proto.Ping.getDefaultInstance()));
-                      // ch.pipeline()
-                      // .addLast(
-                      // "decoder pong", new ProtobufDecoder(Proto.pong.getDefaultInstance()));
-
-                      ch.pipeline().addLast("message handle", new MessageHandler());
+                      pipeline.addLast("编解码",new Codec());
+                      pipeline.addLast("message handle", new MessageHandler());
                       // ch.pipeline().addLast(new NettyServerHandler());
                     }
                   });
