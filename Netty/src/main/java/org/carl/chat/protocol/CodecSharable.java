@@ -1,18 +1,13 @@
 package org.carl.chat.protocol;
 
+import java.util.List;
+import org.carl.chat.config.Config;
+import org.carl.chat.message.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
 import lombok.extern.slf4j.Slf4j;
-import org.carl.chat.config.Config;
-import org.carl.chat.message.Message;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.List;
 
 @Slf4j
 @ChannelHandler.Sharable

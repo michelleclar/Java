@@ -1,5 +1,9 @@
 package org.carl._chat;
 
+import com.google.protobuf.ByteString;
+import com.google.protobuf.CodedOutputStream;
+import com.google.protobuf.MessageLite;
+import com.google.protobuf.Parser;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -18,8 +22,13 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.util.concurrent.GlobalEventExecutor;
+
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import lombok.extern.slf4j.Slf4j;
+import org.carl._chat.handler.MessageHandler;
+import org.carl._chat.protocol.Codec;
 import org.carl.protocol.common.Proto;
 
 @Slf4j
@@ -30,7 +39,7 @@ public class App {
     new Thread(App::server).start();
     Thread.sleep(2);
     new Thread(App::client).start();
-    new Thread(App::client).start();
+    // new Thread(App::client).start();
   }
 
   private static void client() {
@@ -46,16 +55,19 @@ public class App {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
                       ChannelPipeline pipeline = ch.pipeline();
-                      pipeline.addLast("encoder", new ProtobufEncoder()); // protobuf 编码器
-                      pipeline.addLast(
-                          "decoder user", new ProtobufDecoder(Proto.User.getDefaultInstance()));
-                      pipeline.addLast(
-                          "decoder message",
-                          new ProtobufDecoder(Proto.Message.getDefaultInstance()));
-                      pipeline.addLast(
-                          "decoder ping", new ProtobufDecoder(Proto.Ping.getDefaultInstance()));
-                      pipeline.addLast(
-                          "decoder pong", new ProtobufDecoder(Proto.pong.getDefaultInstance()));
+                      // pipeline.addLast("encoder", new ProtobufEncoder()); // protobuf 编码器
+
+                      pipeline.addLast(new Codec());
+                      // pipeline.addLast(
+                      // "decoder user", new ProtobufDecoder(Proto.User.getDefaultInstance()));
+                      // pipeline.addLast(
+                      // "decoder message",
+                      // new ProtobufDecoder(Proto.Message.getDefaultInstance()));
+                      // pipeline.addLast(
+                      // "decoder ping", new ProtobufDecoder(Proto.Ping.getDefaultInstance()));
+                      // pipeline.addLast(
+                      // "decoder pong", new ProtobufDecoder(Proto.pong.getDefaultInstance()));
+                      // pipeline.addLast("message handle", new MessageHandler());
 
                       pipeline.addLast(new NettyClientHandler());
                     }
@@ -64,7 +76,7 @@ public class App {
       ChannelFuture future = client.connect(chatConfig.getHost(), chatConfig.getPort()).sync();
       future.channel().closeFuture().sync();
     } catch (Exception e) {
-      e.printStackTrace();
+      log.error(e.getMessage());
     } finally {
       group.shutdownGracefully();
     }
@@ -86,21 +98,25 @@ public class App {
                   new ChannelInitializer<NioSocketChannel>() {
                     @Override
                     protected void initChannel(NioSocketChannel ch) {
-                      ch.pipeline().addLast("encoder", new ProtobufEncoder());
-                      ch.pipeline()
-                          .addLast("decoder", new ProtobufDecoder(Proto.User.getDefaultInstance()));
-                      ch.pipeline()
-                          .addLast(
-                              "decoder message",
-                              new ProtobufDecoder(Proto.Message.getDefaultInstance()));
-                      ch.pipeline()
-                          .addLast(
-                              "decoder ping", new ProtobufDecoder(Proto.Ping.getDefaultInstance()));
-                      ch.pipeline()
-                          .addLast(
-                              "decoder pong", new ProtobufDecoder(Proto.pong.getDefaultInstance()));
 
-                      ch.pipeline().addLast(new NettyServerHandler());
+                      ChannelPipeline pipeline = ch.pipeline();
+                     pipeline.addLast(new Codec());
+                      // pipeline.addLast("encoder", new ProtobufEncoder());
+
+                       // pipeline.addLast("decoder", new ProtobufDecoder(Proto.User.getDefaultInstance()));
+                      // ch.pipeline()
+                      // .addLast(
+                      // "decoder message",
+                      // new ProtobufDecoder(Proto.Message.getDefaultInstance()));
+                      // ch.pipeline()
+                      // .addLast(
+                      // "decoder ping", new ProtobufDecoder(Proto.Ping.getDefaultInstance()));
+                      // ch.pipeline()
+                      // .addLast(
+                      // "decoder pong", new ProtobufDecoder(Proto.pong.getDefaultInstance()));
+
+                      ch.pipeline().addLast("message handle", new MessageHandler());
+                      // ch.pipeline().addLast(new NettyServerHandler());
                     }
                   });
       ChannelFuture future = server.bind(chatConfig.getPort()).sync();
@@ -108,7 +124,7 @@ public class App {
       future.channel().closeFuture().sync();
 
     } catch (Exception e) {
-
+      log.error(e.getMessage());
     } finally {
       boss.shutdownGracefully();
       work.shutdownGracefully();
@@ -166,17 +182,20 @@ public class App {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
       log.info("Client Active");
       // 发送 User POJO 对象到服务器
-      Proto.User user = Proto.User.newBuilder().setUsername("client").setPassword("root").build();
-
-      ctx.writeAndFlush(user);
+      // Proto.User user =
+      // Proto.User.newBuilder().setUsername("client").setPassword("root").build();
+      Proto.Message message =
+          Proto.Message.newBuilder().setData("hello").setTo("server").setFrom("client").build();
+      ctx.writeAndFlush(message);
     }
 
     /** 当通道有读取事件时触发该方法 */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
       // 读取服务器发送的数据
-      Proto.User user = (Proto.User) msg;
-      log.info("收到服务器响应: {}--{}", user.getUsername(), user.getPassword());
+      Proto.Message message = (Proto.Message) msg;
+
+      log.info("收到服务器响应: {}", message.toString());
     }
   }
 }

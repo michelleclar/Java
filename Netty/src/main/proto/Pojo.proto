@@ -19,6 +19,6 @@ message Ping{
     string data = 1;
 }
 
-message pong{
+message Pong{
   string data = 1;
 }
