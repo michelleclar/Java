@@ -19,6 +19,8 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 import java.net.InetSocketAddress;
 import lombok.extern.slf4j.Slf4j;
 import org.carl._chat.handler.MessageHandler;
+import org.carl._chat.handler.PingHandler;
+import org.carl._chat.handler.PongHandler;
 import org.carl._chat.protocol.Codec;
 import org.carl.protocol.common.Proto;
 
@@ -50,6 +52,8 @@ public class App {
                       pipeline.addLast("编解码", new Codec());
 
                       pipeline.addLast(new NettyClientHandler());
+
+                      pipeline.addLast("pong handle", new PongHandler());
                     }
                   });
 
@@ -80,8 +84,9 @@ public class App {
                     protected void initChannel(NioSocketChannel ch) {
 
                       ChannelPipeline pipeline = ch.pipeline();
-                      pipeline.addLast("编解码",new Codec());
+                      pipeline.addLast("编解码", new Codec());
                       pipeline.addLast("message handle", new MessageHandler());
+                      pipeline.addLast("ping handle", new PingHandler());
                       // ch.pipeline().addLast(new NettyServerHandler());
                     }
                   });
@@ -152,16 +157,17 @@ public class App {
       // Proto.User.newBuilder().setUsername("client").setPassword("root").build();
       Proto.Message message =
           Proto.Message.newBuilder().setData("hello").setTo("server").setFrom("client").build();
-      ctx.writeAndFlush(message);
+      Proto.Ping ping = Proto.Ping.newBuilder().setData("ping").build();
+      ctx.writeAndFlush(ping);
     }
 
-    /** 当通道有读取事件时触发该方法 */
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-      // 读取服务器发送的数据
-      Proto.Message message = (Proto.Message) msg;
-
-      log.info("收到服务器响应: {}", message.toString());
-    }
+    // /** 当通道有读取事件时触发该方法 */
+    // @Override
+    // public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    //   // 读取服务器发送的数据
+    //   Proto.Message message = (Proto.Message) msg;
+    //
+    //   log.info("收到服务器响应: {}", message.toString());
+    // }
   }
 }

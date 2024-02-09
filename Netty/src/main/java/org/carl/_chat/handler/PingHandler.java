@@ -6,6 +6,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.net.InetSocketAddress;
 import lombok.extern.slf4j.Slf4j;
 import org.carl.protocol.common.Proto.Ping;
+import org.carl.protocol.common.Proto.Pong;
 
 @Slf4j
 @ChannelHandler.Sharable
@@ -18,6 +19,9 @@ public class PingHandler extends SimpleChannelInboundHandler<Ping> {
 
     log.info("Message from ==> ip:{}:{}", clientIP, clientPort);
     log.info("message body: {}", message.toString());
-    // channelHandlerContext.writeAndFlush(message);
+
+    Pong ping = Pong.newBuilder().setData("pong").build();
+
+    ctx.writeAndFlush(ping);
   }
 }
