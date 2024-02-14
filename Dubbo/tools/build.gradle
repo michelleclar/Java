@@ -1,0 +1,40 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+dependencies {
+    api 'org.apache.zookeeper:zookeeper:3.9.0'
+    api 'io.dropwizard.metrics:metrics-core:4.1.12.1'
+    api 'org.xerial.snappy:snappy-java:1.1.10.5'
+    api 'org.apache.logging.log4j:log4j-slf4j-impl:2.20.0'
+}
+
+//java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Javadoc).configureEach {
+    options.encoding = 'UTF-8'
+}
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        publish2Local(MavenPublication) {
+            groupId = project.group
+            artifactId = "$project.name"
+            version = project.version
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            url = "$buildDir/repo"
+        }
+    }
+}
+
