@@ -17,6 +17,10 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import java.net.InetSocketAddress;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.carl._chat.handler.MessageHandler;
 import org.carl._chat.handler.PingHandler;
@@ -26,7 +30,6 @@ import org.carl.protocol.common.Proto;
 
 @Slf4j
 public class App {
-  static final ChatConfig chatConfig = init();
 
   public static void main(String[] args) throws InterruptedException {
     new Thread(App::server).start();
@@ -57,7 +60,8 @@ public class App {
                     }
                   });
 
-      ChannelFuture future = client.connect(chatConfig.getHost(), chatConfig.getPort()).sync();
+      ChannelFuture future =
+          client.connect(ChatConfig.getHost(), ChatConfig.getServerPort()).sync();
       future.channel().closeFuture().sync();
     } catch (Exception e) {
       log.error(e.getMessage());
@@ -67,10 +71,9 @@ public class App {
   }
 
   private static void server() {
-    // FIXME: need load config to init
     EventLoopGroup boss = new NioEventLoopGroup();
 
-    EventLoopGroup work = new NioEventLoopGroup(chatConfig.getMaxConnect());
+    EventLoopGroup work = new NioEventLoopGroup(ChatConfig.getMaxConnect());
 
     try {
       // 创建启动器对象
@@ -90,8 +93,8 @@ public class App {
                       // ch.pipeline().addLast(new NettyServerHandler());
                     }
                   });
-      ChannelFuture future = server.bind(chatConfig.getPort()).sync();
-      log.info("listen port:{}", chatConfig.getPort());
+      ChannelFuture future = server.bind(ChatConfig.getServerPort()).sync();
+      log.info("listen port:{}", ChatConfig.getServerPort());
       future.channel().closeFuture().sync();
 
     } catch (Exception e) {
@@ -100,13 +103,6 @@ public class App {
       boss.shutdownGracefully();
       work.shutdownGracefully();
     }
-  }
-
-  public static ChatConfig init() {
-    int port = 8080;
-    int maxConnect = 5;
-    String host = "127.0.0.1";
-    return new ChatConfig(port, maxConnect, host);
   }
 
   // TODO:进行Handle拆分，暂定MessageHandle,FileHandel.
@@ -145,6 +141,8 @@ public class App {
   }
 
   public static class NettyClientHandler extends ChannelInboundHandlerAdapter {
+    private static final ScheduledExecutorService SCHEDULED_EXECUTOR =
+        Executors.newSingleThreadScheduledExecutor();
     public static final ChannelGroup channels =
         new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
@@ -155,19 +153,21 @@ public class App {
       // 发送 User POJO 对象到服务器
       // Proto.User user =
       // Proto.User.newBuilder().setUsername("client").setPassword("root").build();
-      Proto.Message message =
-          Proto.Message.newBuilder().setData("hello").setTo("server").setFrom("client").build();
+      // Proto.Message message =
+      // Proto.Message.newBuilder().setData("hello").setTo("server").setFrom("client").build();
       Proto.Ping ping = Proto.Ping.newBuilder().setData("ping").build();
       ctx.writeAndFlush(ping);
+//      ScheduledFuture<?> scheduleAtFixedRate =
+//          SCHEDULED_EXECUTOR.scheduleAtFixedRate(
+//              () -> {
+//                ctx.writeAndFlush(ping);
+//              },
+//              1,
+//              3,
+//              TimeUnit.SECONDS);
+//
+      TimeUnit.SECONDS.sleep(8);
+//      scheduleAtFixedRate.cancel(true);
     }
-
-    // /** 当通道有读取事件时触发该方法 */
-    // @Override
-    // public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-    //   // 读取服务器发送的数据
-    //   Proto.Message message = (Proto.Message) msg;
-    //
-    //   log.info("收到服务器响应: {}", message.toString());
-    // }
   }
 }
