@@ -1,5 +1,6 @@
 package org.carl._chat.protocol;
 
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
 import com.google.protobuf.MessageLiteOrBuilder;
 import io.netty.buffer.ByteBuf;
@@ -16,9 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 public class Codec extends MessageToMessageCodec<ByteBuf, MessageLiteOrBuilder> {
 
   @Override
-  protected void encode(ChannelHandlerContext ctx, MessageLiteOrBuilder msg, List<Object> out)
-      throws Exception {
-    log.info("encode");
+  protected void encode(ChannelHandlerContext ctx, MessageLiteOrBuilder msg, List<Object> out) {
+    log.debug("encode");
 
     ByteBuf _out = ctx.alloc().buffer();
     // TODO:edit enmu to Serializable
@@ -32,8 +32,8 @@ public class Codec extends MessageToMessageCodec<ByteBuf, MessageLiteOrBuilder> 
   }
 
   @Override
-  protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
-    log.info("decode");
+  protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws InvalidProtocolBufferException {
+    log.debug("decode");
     byte messageType = msg.readByte();
 
     int length = msg.readableBytes();

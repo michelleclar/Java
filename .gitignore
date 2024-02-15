@@ -12,3 +12,5 @@
 **/target
 **/.classpath
 **/bin
+SpringBoot/.classpath
+ORM/.classpath

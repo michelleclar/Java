@@ -6,9 +6,9 @@ import org.carl.protocol.common.Proto;
 
 public enum SerializableProto {
   MESSAGE((byte) 0, Proto.Message.getDefaultInstance()),
-  PING((byte) 0, Proto.Ping.getDefaultInstance()),
-  POING((byte) 0, Proto.Pong.getDefaultInstance()),
-  USER((byte) 0, Proto.User.getDefaultInstance());
+  PING((byte) 1, Proto.Ping.getDefaultInstance()),
+  POING((byte) 2, Proto.Pong.getDefaultInstance()),
+  USER((byte) 3, Proto.User.getDefaultInstance());
 
   final MessageLiteOrBuilder o;
   final byte type;
