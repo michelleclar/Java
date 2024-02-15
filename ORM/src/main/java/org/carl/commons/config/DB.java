@@ -8,7 +8,6 @@ import org.carl.utils.MapToBeanConverter;
 import org.yaml.snakeyaml.Yaml;
 
 public class DB {
-  // NOTE: Driver --> connection config(key,)
   public static Map<String, Map<String, DataSource>> driverMap = new HashMap<>();
 
   static {
@@ -46,6 +45,8 @@ public class DB {
   }
 
   public static final String MYSQL = "mysql";
+
+  public static final String POSTGRES = "postgres";
 
   public static void main(String[] args) {}
 }

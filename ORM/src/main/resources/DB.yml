@@ -4,8 +4,8 @@ DB:
     jdbcUrl: jdbc:mysql://127.0.0.1:3306/db
     userName: root
     password: root
-  - Driver: mysql
+  - Driver: postgres
     id: db2
-    jdbcUrl: jdbc:mysql://127.0.0.1:3306/db
+    jdbcUrl: jdbc:postgresql://127.0.0.1:5432/db
     userName: root
     password: root

@@ -2,8 +2,6 @@ plugins {
     id 'java'
 }
 
-
-
 dependencies {
     implementation "org.jooq:jooq:${jooqVersion}"
     implementation "org.jooq:jooq-meta:${jooqVersion}"
@@ -11,5 +9,5 @@ dependencies {
     implementation 'org.yaml:snakeyaml:2.2'
 
     runtimeOnly "mysql:mysql-connector-java:${mysqlVersion}"
+    runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
 }
-
