@@ -21,7 +21,6 @@ public class DB {
           DataSource dataSource = MapToBeanConverter.convert(v, DataSource.class);
           getDataSourceMap((String) v.get("Driver")).put(dataSource.getId(), dataSource);
         });
-    System.out.println(driverMap);
   }
 
   public static DataSource getMysqlDataSourceById(String id) {

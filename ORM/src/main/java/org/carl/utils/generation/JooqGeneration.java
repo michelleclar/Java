@@ -139,13 +139,21 @@ public class JooqGeneration {
   }
 
   public static void main(String[] args) throws Exception {
-    JooqGeneration.getBuilder(DB.POSTGRES)
-        .setDataSourceId("db2")
-        .setSchema("public")
+    JooqGeneration.getBuilder(DB.MYSQL)
+        .setDataSourceId("db1")
+        .setSchema("db")
         .setIncludes(".*")
         .setExcludes("")
         .setPackageName("org.gen")
         .setDirectoryName("ORM/src/main/java")
         .execute();
+    // JooqGeneration.getBuilder(DB.POSTGRES)
+    //     .setDataSourceId("db2")
+    //     .setSchema("public")
+    //     .setIncludes(".*")
+    //     .setExcludes("")
+    //     .setPackageName("org.gen")
+    //     .setDirectoryName("ORM/src/main/java")
+    //     .execute();
   }
 }

@@ -3,11 +3,15 @@ plugins {
 }
 
 dependencies {
+    runtimeOnly "mysql:mysql-connector-java:${mysqlVersion}"
+
     implementation "org.jooq:jooq:${jooqVersion}"
     implementation "org.jooq:jooq-meta:${jooqVersion}"
     implementation "org.jooq:jooq-codegen:${jooqVersion}"
     implementation 'org.yaml:snakeyaml:2.2'
 
-    runtimeOnly "mysql:mysql-connector-java:${mysqlVersion}"
+
+//    implementation "org.mybatis:mybatis:${mybatisVersion}"
+
     runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
 }
