@@ -18,6 +18,9 @@ subprojects {
         mavenLocal()
         maven { url "https://maven.aliyun.com/repository/central" }
         maven { url "https://maven.aliyun.com/repository/jcenter" }
+        maven {
+            url = uri('https://repository.apache.org/snapshots')
+        }
         jcenter()
     }
 
@@ -41,6 +44,8 @@ subprojects {
 //        // spring boot starter
 //        implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
     }
+
+
 
 
 }
