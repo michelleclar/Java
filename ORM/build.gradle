@@ -2,21 +2,14 @@ plugins {
     id 'java'
 }
 
-group = 'org.carl'
-version = 'unspecified'
-
-    repositories {
-        mavenLocal()
-        maven { url "https://maven.aliyun.com/repository/central" }
-        maven { url "https://maven.aliyun.com/repository/jcenter" }
-        jcenter()
-    }
-
 
 
 dependencies {
+    implementation "org.jooq:jooq:${jooqVersion}"
+    implementation "org.jooq:jooq-meta:${jooqVersion}"
+    implementation "org.jooq:jooq-codegen:${jooqVersion}"
+    implementation 'org.yaml:snakeyaml:2.2'
+
+    runtimeOnly "mysql:mysql-connector-java:${mysqlVersion}"
 }
 
-test {
-    useJUnitPlatform()
-}

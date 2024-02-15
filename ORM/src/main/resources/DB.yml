@@ -1,0 +1,11 @@
+DB:
+  - Driver: mysql
+    id: db1
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/db
+    userName: root
+    password: root
+  - Driver: mysql
+    id: db2
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/db
+    userName: root
+    password: root
