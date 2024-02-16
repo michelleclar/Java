@@ -1,9 +1,10 @@
 package org.carl.utils.generation;
 
+
 import org.carl.commons.config.DB;
 import org.carl.commons.config.DataSource;
-import org.carl.commons.fileds.Driver;
-import org.carl.commons.fileds.JooqGen;
+import org.carl.commons.fields.Driver;
+import org.carl.commons.fields.JooqGen;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.*;
 
@@ -140,7 +141,7 @@ public class JooqGeneration {
         .setIncludes(".*")
         .setExcludes("")
         .setPackageName("org.gen")
-        .setDirectoryName("ORM/src/main/java")
+        .setDirectoryName("ORM/JOOQ/src/main/java")
         .execute();
     // JooqGeneration.getBuilder(DB.POSTGRES)
     //     .setDataSourceId("db2")

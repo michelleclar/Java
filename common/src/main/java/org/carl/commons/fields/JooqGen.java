@@ -1,4 +1,4 @@
-package org.carl.commons.fileds;
+package org.carl.commons.fields;
 
 public class JooqGen {
 

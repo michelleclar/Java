@@ -1,4 +1,5 @@
-package org.carl.commons.fileds;
+package org.carl.commons.fields;
 
-public class Fileds {
+public class Fields {
+    public static final String AUTHOR = "Carl";
 }

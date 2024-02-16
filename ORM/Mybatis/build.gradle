@@ -1,0 +1,4 @@
+dependencies {
+    implementation "org.mybatis:mybatis:${mybatisVersion}"
+    implementation "org.mybatis.generator:mybatis-generator-core:${mybatisGeneratorVersion}"
+}
