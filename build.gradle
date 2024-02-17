@@ -20,9 +20,9 @@ subprojects {
     }
 
     dependencies {
-        compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22' // compile代表编译时使用的lombok
-        annotationProcessor 'org.projectlombok:lombok:1.18.28'
-        testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'// testAnnotationProcessor代表test下代码的注解执行器
+//        compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22' // compile代表编译时使用的lombok
+//        annotationProcessor 'org.projectlombok:lombok:1.18.28'
+//        testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'// testAnnotationProcessor代表test下代码的注解执行器
         implementation 'org.slf4j:slf4j-api:1.7.32'
         implementation 'org.slf4j:slf4j-simple:1.7.32'
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'

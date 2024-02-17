@@ -2,10 +2,5 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
 }
 rootProject.name = 'Java'
-include 'Jdk-21'
-include 'Jdk-17'
-include 'RPC'
-include 'Netty'
 include 'SpringBoot'
-include 'ORM'
 

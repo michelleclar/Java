@@ -1,10 +1,6 @@
 plugins {
-    id 'java'
     id 'org.springframework.boot' version '3.2.0' apply false
-
 }
-apply plugin: 'java'
-apply plugin: 'idea'
 apply plugin: 'io.spring.dependency-management'
 
 dependencyManagement {
@@ -17,6 +13,7 @@ dependencies {
 //    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.springframework.security', module: 'spring-security-config'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 //    annotationProcessor 'org.projectlombok:lombok:1.18.22' // annotationProcessor代表main下代码的注解执行器
@@ -27,4 +24,3 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-
