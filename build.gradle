@@ -7,6 +7,7 @@ ext {
     mybatisGeneratorVersion = '1.4.2'
     mybatisPlusVersion = '3.5.5'
     freemarkerVersion = "2.3.32"
+    hikariCPVersion = "5.1.0"
 }
 
 subprojects {

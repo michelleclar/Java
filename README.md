@@ -5,4 +5,3 @@
 - [x] JOOQ
 - [x] Mybatis
 - [x] Mybatis-plus
-- [ ] Mybatis-flex

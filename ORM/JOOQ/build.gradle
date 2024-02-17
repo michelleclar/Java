@@ -6,8 +6,5 @@ dependencies {
     implementation "org.jooq:jooq-codegen:${jooqVersion}"
     implementation 'org.yaml:snakeyaml:2.2'
 
-
-//    implementation "org.mybatis:mybatis:${mybatisVersion}"
-
-
+    implementation "com.zaxxer:HikariCP:${hikariCPVersion}"
 }

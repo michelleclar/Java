@@ -1,22 +1,29 @@
 package org.carl.commons.config;
 
-import org.carl.utils.MapToBeanConverter;
-import org.yaml.snakeyaml.Yaml;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.carl.commons.fields.Fields;
+import org.carl.utils.MapToBeanConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.Yaml;
 
 public class DB {
   public static Map<String, Map<String, DataSource>> driverMap = new HashMap<>();
 
+  static Logger LOG = LoggerFactory.getLogger(DB.class);
+
   static {
     Yaml yaml = new Yaml();
     Map<String, Object> configMap =
-        yaml.load(DB.class.getClassLoader().getResourceAsStream("DB.yml"));
+        yaml.load(DB.class.getClassLoader().getResourceAsStream(Fields.DBCONFIG));
 
-    List<Map<String, Object>> o = (ArrayList<Map<String, Object>>) configMap.get("DB");
+    List<Map<String, Object>> o = (ArrayList<Map<String, Object>>) configMap.get(Fields.DB);
+    LOG.debug("读取的文件名为{}", Fields.DBCONFIG);
+
+    LOG.debug("读取的文件内容为{}", o);
     o.forEach(
         v -> {
           DataSource dataSource = MapToBeanConverter.convert(v, DataSource.class);
@@ -49,4 +56,9 @@ public class DB {
   public static final String POSTGRES = "postgres";
 
   public static void main(String[] args) {}
+
+  public static Map<String, List<String>> getDBTypeAndSourceIdMap() {
+
+    return null;
+  }
 }

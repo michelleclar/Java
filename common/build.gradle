@@ -1,3 +1,5 @@
 dependencies {
     implementation 'org.yaml:snakeyaml:2.2'
+
+    implementation "com.zaxxer:HikariCP:${hikariCPVersion}"
 }
