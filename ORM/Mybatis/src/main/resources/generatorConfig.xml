@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
     <!-- 引入配置文件 -->
-    <properties resource="generator.properties" />
+    <properties resource="jdbc.properties" />
 
 
     <context id="context1" targetRuntime="MyBatis3">
@@ -13,7 +13,7 @@
             <property name="suppressDate" value="true" />
         </commentGenerator>
         <!-- 数据库连接信息 -->
-        <jdbcConnection driverClass="${jdbc.driverClassName}"
+        <jdbcConnection driverClass="${jdbc.driver}"
                         connectionURL="${jdbc.url}" userId="${jdbc.username}" password="${jdbc.password}" />
 
         <!-- 生成Model对象路径配置 -->
