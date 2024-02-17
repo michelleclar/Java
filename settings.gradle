@@ -8,4 +8,7 @@ include 'RPC'
 include 'Netty'
 include 'SpringBoot'
 include 'ORM'
-
+include 'Dubbo'
+include(':dubbo-spring-boot-interface')
+include(':dubbo-spring-boot-consumer')
+include(':dubbo-spring-boot-provider')
