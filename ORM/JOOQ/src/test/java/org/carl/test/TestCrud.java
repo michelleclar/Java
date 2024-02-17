@@ -68,7 +68,7 @@ public class TestCrud {
     User oldUser = mySQLUserDao.findById(1);
 
     assertNotNull(oldUser);
-    oldUser.setEmail("1@xx.com");
+    oldUser.setEmail("12343@xx.com");
     mySQLUserDao.update(oldUser);
     User newUser = mySQLUserDao.findById(1);
     int i = System.in.read();
