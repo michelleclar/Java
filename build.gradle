@@ -2,13 +2,15 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.4'
-    id 'org.graalvm.buildtools.native' version '0.9.28'
+// enable it need graalvm jdk,else build failed
+//    id 'org.graalvm.buildtools.native' version '0.9.28'
 }
-ext {
-    set('springCloudVersion', "2023.0.0")
-}
-subprojects {
 
+ext {
+    set('springCloudVersion', '2023.0.0')
+}
+
+subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
     apply plugin: 'io.spring.dependency-management'
@@ -23,9 +25,11 @@ subprojects {
         mavenLocal()
         maven { url 'https://maven.aliyun.com/repository/central' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/' }
     }
     dependencies {
-        implementation 'org.springframework.cloud:spring-cloud-starter'
+        implementation 'org.springframework.cloud:spring-cloud-starter' // 原生statter 不会阻塞
+        implementation 'org.springframework.boot:spring-boot-starter-web' // 会进行监听
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
     dependencyManagement {
