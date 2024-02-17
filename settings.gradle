@@ -2,13 +2,8 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
 }
 rootProject.name = 'Java'
-include 'Jdk-21'
-include 'Jdk-17'
-include 'RPC'
-include 'Netty'
-include 'SpringBoot'
-include 'ORM'
 include 'Dubbo'
-include(':dubbo-spring-boot-interface')
-include(':dubbo-spring-boot-consumer')
-include(':dubbo-spring-boot-provider')
+include('Dubbo:dubbo-spring-boot-interface')
+include('Dubbo:dubbo-spring-boot-consumer')
+include('Dubbo:dubbo-spring-boot-provider')
+include('Dubbo:tools')
