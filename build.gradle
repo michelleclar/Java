@@ -1,20 +1,21 @@
 ext {
 
+    mybatisVersion = '3.5.13'
+    mysqlVersion = '8.0.22'
+    postgresqlVersion = '42.6.0'
 }
 
 subprojects {
-    apply plugin: "java"
-    apply plugin: "idea"
-
+    apply plugin: 'java'
+    apply plugin: 'idea'
     [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
-    group "org.carl"
-    version "1.0.0"
+    group 'org.carl'
+    version '1.0.0'
 
     repositories {
         mavenLocal()
-        maven { url "https://maven.aliyun.com/repository/central" }
-        maven { url "https://maven.aliyun.com/repository/jcenter" }
-        jcenter()
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
     }
 
     dependencies {
@@ -26,8 +27,6 @@ subprojects {
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     }
-
-
 
 
 }
