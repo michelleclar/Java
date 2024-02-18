@@ -50,10 +50,12 @@ public class DB {
     driverMap.put(driverName, m);
     return driverMap.get(driverName);
   }
-
+  //NOTE:add new DB
   public static final String MYSQL = "mysql";
 
   public static final String POSTGRES = "postgres";
+
+  public static final String MARIADB = "mariadb";
 
   public static void main(String[] args) {}
 

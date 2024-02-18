@@ -1,6 +1,5 @@
 package org.carl.utils.generation;
 
-
 import org.carl.commons.config.DB;
 import org.carl.commons.config.DataSource;
 import org.carl.commons.fields.Driver;
@@ -69,11 +68,14 @@ public class JooqGeneration {
         case DB.MYSQL -> {
           this.driver = Driver.MYSQL;
           this.jooqGenDatabase = JooqGen.MYSQL;
-          return;
         }
         case DB.POSTGRES -> {
           this.driver = Driver.POSTGRES;
           this.jooqGenDatabase = JooqGen.POSTGRES;
+        }
+        case DB.MARIADB-> {
+          this.driver = Driver.MARIADB;
+          this.jooqGenDatabase = JooqGen.MARIADB;
         }
         default -> throw new RuntimeException("not supported this driver");
       }
@@ -140,16 +142,24 @@ public class JooqGeneration {
         .setSchema("db")
         .setIncludes(".*")
         .setExcludes("")
-        .setPackageName("org.gen")
+        .setPackageName("org.gen."+DB.MYSQL)
         .setDirectoryName("ORM/JOOQ/src/main/java")
         .execute();
-    // JooqGeneration.getBuilder(DB.POSTGRES)
-    //     .setDataSourceId("db2")
-    //     .setSchema("public")
-    //     .setIncludes(".*")
-    //     .setExcludes("")
-    //     .setPackageName("org.gen")
-    //     .setDirectoryName("ORM/src/main/java")
-    //     .execute();
+    JooqGeneration.getBuilder(DB.MARIADB)
+        .setDataSourceId("db3")
+        .setSchema("db")
+        .setIncludes(".*")
+        .setExcludes("")
+        .setPackageName("org.gen."+DB.MARIADB)
+        .setDirectoryName("ORM/JOOQ/src/main/java")
+        .execute();
+    JooqGeneration.getBuilder(DB.POSTGRES)
+        .setDataSourceId("db2")
+        .setSchema("public")
+        .setIncludes(".*")
+        .setExcludes("")
+        .setPackageName("org.gen."+DB.POSTGRES)
+        .setDirectoryName("ORM/JOOQ/src/main/java")
+        .execute();
   }
 }

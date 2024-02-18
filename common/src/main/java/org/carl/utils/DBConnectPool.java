@@ -56,40 +56,41 @@ public class DBConnectPool {
   // }
 
   static void initByMyDB(Map<String, List<String>> dbTypeAndSourceIdMap) {
-    dbTypeAndSourceIdMap.forEach(
-        (k, v) -> {
-          String driverClassName = Driver.MYSQL;
-          switch (k) {
-            case DB.MYSQL -> driverClassName = Driver.MYSQL;
-            case DB.POSTGRES -> driverClassName = Driver.POSTGRES;
-            default -> throw new RuntimeException("not supported this driver");
-          }
-          for (String sourceId : v) {
-            DataSource dataSource = DB.getDataSource(k, sourceId);
-            HikariDataSource hikariDataSource = options(dataSource, driverClassName);
-            Map<String, HikariDataSource> hikarDataSourceMap = getHikarDataSourceMap(k);
-            hikarDataSourceMap.put(dataSource.getId(), hikariDataSource);
-          }
-        });
+    dbTypeAndSourceIdMap.forEach((k, v) -> {
+      String driverClassName = Driver.MYSQL;
+      // NOTE:add new DB
+      switch (k) {
+        case DB.MYSQL -> driverClassName = Driver.MYSQL;
+        case DB.POSTGRES -> driverClassName = Driver.POSTGRES;
+        case DB.MARIADB -> driverClassName = Driver.MARIADB;
+        default -> throw new RuntimeException("not supported this driver");
+      }
+      for (String sourceId : v) {
+        DataSource dataSource = DB.getDataSource(k, sourceId);
+        HikariDataSource hikariDataSource = options(dataSource, driverClassName);
+        Map<String, HikariDataSource> hikarDataSourceMap = getHikarDataSourceMap(k);
+        hikarDataSourceMap.put(dataSource.getId(), hikariDataSource);
+      }
+    });
   }
 
   static void _initByMyDB(Map<String, Map<String, DataSource>> dbTypeAndSourceIdMap) {
-    dbTypeAndSourceIdMap.forEach(
-        (k, v) -> {
-          String driverClassName = Driver.MYSQL;
-          switch (k) {
-            case DB.MYSQL -> driverClassName = Driver.MYSQL;
-            case DB.POSTGRES -> driverClassName = Driver.POSTGRES;
-            default -> throw new RuntimeException("not supported this driver");
-          }
-          Collection<DataSource> values = v.values();
-          for (DataSource d : values) {
+    dbTypeAndSourceIdMap.forEach((k, v) -> {
+      String driverClassName;
+      switch (k) {
+        case DB.MYSQL -> driverClassName = Driver.MYSQL;
+        case DB.POSTGRES -> driverClassName = Driver.POSTGRES;
+        case DB.MARIADB -> driverClassName = Driver.MARIADB;
+        default -> throw new RuntimeException("not supported this driver");
+      }
+      Collection<DataSource> values = v.values();
+      for (DataSource d : values) {
 
-            HikariDataSource hikariDataSource = options(d, driverClassName);
-            Map<String, HikariDataSource> hikarDataSourceMap = getHikarDataSourceMap(k);
-            hikarDataSourceMap.put(d.getId(), hikariDataSource);
-          }
-        });
+        HikariDataSource hikariDataSource = options(d, driverClassName);
+        Map<String, HikariDataSource> hikarDataSourceMap = getHikarDataSourceMap(k);
+        hikarDataSourceMap.put(d.getId(), hikariDataSource);
+      }
+    });
   }
 
   static Map<String, HikariDataSource> getHikarDataSourceMap(String driverName) {
@@ -134,7 +135,7 @@ public class DBConnectPool {
     HikariPoolMXBean hikariPoolMXBean = h.getHikariPoolMXBean();
     logger.info("Active Connection: {}", hikariPoolMXBean.getActiveConnections());
     logger.info("Idle Connection: {}", hikariPoolMXBean.getIdleConnections());
-    logger.info(
-        "Threads Waiting for Connection: {}", hikariPoolMXBean.getThreadsAwaitingConnection());
+    logger.info("Threads Waiting for Connection: {}",
+        hikariPoolMXBean.getThreadsAwaitingConnection());
   }
 }

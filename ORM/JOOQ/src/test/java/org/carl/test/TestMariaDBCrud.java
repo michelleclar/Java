@@ -3,8 +3,8 @@ package org.carl.test;
 import org.carl.commons.config.DB;
 import org.carl.commons.config.DataSource;
 import org.carl.utils.DBConnectPool;
-import org.gen.tables.daos.UserDao;
-import org.gen.tables.pojos.User;
+import org.gen.mariadb.tables.daos.UserDao;
+import org.gen.mariadb.tables.pojos.User;
 import org.jooq.DSLContext;
 import org.jooq.Record2;
 import org.jooq.Result;
@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.gen.Tables.USER;
+import static org.gen.mariadb.Tables.USER;
 import static org.jooq.impl.DSL.count;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -28,16 +28,12 @@ public class TestMariaDBCrud {
 
   UserDao userDao;
 
-  DSLContext getDslContext(DataSource dataSource) {
-    return DSL.using(dataSource.getJdbcUrl(), dataSource.getUsername(), dataSource.getPassword());
-  }
-
   @BeforeEach
   public void setUp() throws SQLException {
     // mySQLDSL = getMysqlDslContext();
     // mySQLUsetDao = new UserDao(mySQLDSL.configuration());
-    dsl = DSL.using(DBConnectPool.getConnectionPool(DB.POSTGRES, "db2").getConnection(),
-        SQLDialect.POSTGRES);
+    dsl = DSL.using(DBConnectPool.getConnectionPool(DB.MARIADB, "db3").getConnection(),
+        SQLDialect.MARIADB);
     userDao = new UserDao(dsl.configuration());
   }
 

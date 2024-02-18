@@ -9,3 +9,8 @@ DB:
     jdbcUrl: jdbc:postgresql://127.0.0.1:5432/db
     userName: root
     password: root
+  - Driver: mariadb
+    id: db3
+    jdbcUrl: jdbc:mariadb://127.0.0.1:13306/db
+    userName: root
+    password: root
