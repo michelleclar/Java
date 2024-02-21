@@ -1,6 +1,0 @@
-dependencies {
-    implementation project(path: ':common')
-    implementation "com.baomidou:mybatis-plus-generator:${mybatisPlusVersion}"
-    implementation "com.baomidou:mybatis-plus:${mybatisPlusVersion}"
-    implementation "org.freemarker:freemarker:${freemarkerVersion}"
-}
