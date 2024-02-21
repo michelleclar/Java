@@ -18,23 +18,10 @@ subprojects {
     group 'org.carl'
     version '1.0.0'
 
-    repositories {
-        mavenLocal()
-        maven { url 'https://maven.aliyun.com/repository/central' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-    }
 
     dependencies {
 
-//        implementation 'org.slf4j:slf4j-api:1.7.32'
-        implementation 'org.slf4j:slf4j-simple:2.0.12'
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
-        runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
-        runtimeOnly "mysql:mysql-connector-java:${mysqlVersion}"
-
-        implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.2'
     }
 
     test {

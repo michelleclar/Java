@@ -16,3 +16,36 @@ SpringBoot/.classpath
 ORM/.classpath
 ORM/src/main/java/org/gen
 **/gen/
+# Gradle
+.gradle/
+build/
+
+
+# IntelliJ
+*.ipr
+*.iml
+*.iws
+
+# NetBeans
+nb-configuration.xml
+
+# Visual Studio Code
+.vscode
+.factorypath
+
+# OSX
+.DS_Store
+
+# Vim
+*.swp
+*.swo
+
+# patch
+*.orig
+*.rej
+
+# Local environment
+.env
+
+# Plugin directory
+/.quarkus/cli/plugins/

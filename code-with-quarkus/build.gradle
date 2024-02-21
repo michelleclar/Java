@@ -11,15 +11,15 @@ repositories {
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation enforcedPlatform("${quarkusPlatformGroupId}:quarkus-camel-bom:${quarkusPlatformVersion}")
-    implementation 'io.quarkiverse.config:quarkus-config-consul'
+//    implementation 'io.quarkiverse.config:quarkus-config-consul'
     implementation 'io.quarkus:quarkus-grpc'
     implementation 'io.quarkus:quarkus-smallrye-reactive-messaging-pulsar'
-    implementation 'io.quarkiverse.jooq:quarkus-jooq:2.0.0'
-    implementation 'io.quarkus:quarkus-reactive-mysql-client'
-    implementation 'org.apache.camel.quarkus:camel-quarkus-consul'
-    implementation 'io.quarkus:quarkus-arc'
+//    implementation 'io.quarkiverse.jooq:quarkus-jooq:2.0.0'
+//    implementation 'io.quarkus:quarkus-reactive-mysql-client'
+//    implementation 'org.apache.camel.quarkus:camel-quarkus-consul'
+//    implementation 'io.quarkus:quarkus-arc'
     testImplementation 'io.quarkus:quarkus-junit5'
-    implementation 'io.quarkus:quarkus-jdbc-postgresql'
+//    implementation 'io.quarkus:quarkus-jdbc-postgresql'
 }
 
 group 'org.carl'
