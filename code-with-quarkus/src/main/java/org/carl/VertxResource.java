@@ -1,16 +1,18 @@
 package org.carl;
 
+import java.nio.charset.StandardCharsets;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import io.vertx.core.file.OpenOptions;
+import io.vertx.core.json.JsonArray;
 import io.vertx.mutiny.core.Vertx;
 import io.vertx.mutiny.core.eventbus.EventBus;
+import io.vertx.mutiny.ext.web.client.HttpResponse;
 import io.vertx.mutiny.ext.web.client.WebClient;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
-import java.nio.charset.StandardCharsets;
 
 @Path("/vertx")
 public class VertxResource {
@@ -52,5 +54,20 @@ public class VertxResource {
   @Path("/hello")
   public Uni<String> hello(@QueryParam("name") String name) {
     return bus.<String>request("greetings", name).onItem().transform(response -> response.body());
+  }
+
+  private static final String URL =
+      "https://en.wikipedia.org/w/api.php?action=parse&page=Quarkus&format=json&prop=langlinks";
+
+  @GET
+  @Path("/web")
+  public Uni<JsonArray> retrieveDataFromWikipedia() {
+    return client
+        .getAbs(URL)
+        .send()
+        .onItem()
+        .transform(HttpResponse::bodyAsJsonObject)
+        .onItem()
+        .transform(json -> json.getJsonObject("parse").getJsonArray("langlinks"));
   }
 }
