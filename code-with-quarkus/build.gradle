@@ -5,21 +5,19 @@ plugins {
 
 repositories {
     mavenLocal()
+    maven { url 'https://maven.aliyun.com/repository/central' }
+    maven { url 'https://maven.aliyun.com/repository/jcenter' }
     mavenCentral()
 }
 
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
-    implementation enforcedPlatform("${quarkusPlatformGroupId}:quarkus-camel-bom:${quarkusPlatformVersion}")
-//    implementation 'io.quarkiverse.config:quarkus-config-consul'
-    implementation 'io.quarkus:quarkus-grpc'
-    implementation 'io.quarkus:quarkus-smallrye-reactive-messaging-pulsar'
-//    implementation 'io.quarkiverse.jooq:quarkus-jooq:2.0.0'
-//    implementation 'io.quarkus:quarkus-reactive-mysql-client'
-//    implementation 'org.apache.camel.quarkus:camel-quarkus-consul'
-//    implementation 'io.quarkus:quarkus-arc'
+    implementation 'io.quarkus:quarkus-vertx'
+    implementation 'io.quarkus:quarkus-arc'
+    implementation("io.quarkus:quarkus-resteasy-reactive-jackson")
+    implementation("io.smallrye.reactive:smallrye-mutiny-vertx-web-client")
+
     testImplementation 'io.quarkus:quarkus-junit5'
-//    implementation 'io.quarkus:quarkus-jdbc-postgresql'
 }
 
 group 'org.carl'
@@ -31,7 +29,7 @@ java {
 }
 
 test {
-    systemProperty 'java.util.logging.manager', 'org.jboss.logmanager.LogManager'
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
 }
 compileJava {
     options.encoding = 'UTF-8'

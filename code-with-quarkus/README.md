@@ -49,20 +49,4 @@ If you want to learn more about building native executables, please consult http
 
 ## Related Guides
 
-- Consul Config ([guide](https://quarkiverse.github.io/quarkiverse-docs/quarkus-config-extensions/dev/consul.html)): Read runtime configuration from Consul Key - Value store
-- SmallRye Reactive Messaging - Pulsar Connector ([guide](https://quarkus.io/guides/pulsar)): Connect to Apache Pulsar with Reactive Messaging
-- Reactive MySQL client ([guide](https://quarkus.io/guides/reactive-sql-clients)): Connect to the MySQL database using the reactive pattern
-- Camel Consul ([guide](https://camel.apache.org/camel-quarkus/latest/reference/extensions/consul.html)): Integrate with Consul service discovery and configuration store
-
-## Provided Code
-
-### gRPC
-
-Create your first gRPC service
-
-[Related guide section...](https://quarkus.io/guides/grpc-getting-started)
-
-### Reactive Messaging codestart
-
-Use SmallRye Reactive Messaging
-
+- Eclipse Vert.x ([guide](https://quarkus.io/guides/vertx)): Write reactive applications with the Vert.x API

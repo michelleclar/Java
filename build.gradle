@@ -14,6 +14,7 @@ ext {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
+
     [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
     group 'org.carl'
     version '1.0.0'
