@@ -5,8 +5,8 @@ plugins {
 
 repositories {
     mavenLocal()
-    maven { url 'https://maven.aliyun.com/repository/central' }
-    maven { url 'https://maven.aliyun.com/repository/jcenter' }
+    // maven { url 'https://maven.aliyun.com/repository/central' }
+    // maven { url 'https://maven.aliyun.com/repository/jcenter' }
 
     mavenCentral()
 }
@@ -14,8 +14,9 @@ repositories {
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkiverse.jooq:quarkus-jooq:2.0.1'
-    implementation 'io.quarkus:quarkus-vertx-graphql'
+    // implementation 'io.quarkus:quarkus-vertx-graphql'
     implementation 'io.quarkus:quarkus-vertx'
+    implementation 'io.quarkus:quarkus-jdbc-postgresql'
 
     implementation('io.quarkus:quarkus-resteasy-reactive-jackson')
     implementation('io.smallrye.reactive:smallrye-mutiny-vertx-web-client')
