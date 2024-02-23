@@ -5,6 +5,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.conf.Settings;
@@ -22,16 +23,26 @@ public class JooqContextFactory {
   AgroalDataSource defaultDataSource;
 
   @Inject
-  @DataSource("users")
-  AgroalDataSource usersDataSource;
+  @DataSource("pg")
+  AgroalDataSource pgDataSource;
 
   @Inject
-  @DataSource("inventory")
-  AgroalDataSource inventoryDataSource;
+  @DataSource("mariadb")
+  AgroalDataSource mariadbDataSource;
 
   public JooqContext createJooqContext(RequestContext requestContext) {
+    return createJooqContext(requestContext,SQLDialect.MYSQL);
+  }
+
+  public JooqContext createJooqContext(RequestContext requestContext, SQLDialect sqlDialect) {
     try {
-      DSLContext ctx = DSL.using(getConfiguration(requestContext));
+      Configuration configuration = getConfiguration(requestContext);
+      switch (sqlDialect){
+        case MYSQL -> configuration.set(defaultDataSource);
+        case POSTGRES -> configuration.set(pgDataSource);
+        case MARIADB -> configuration.set(mariadbDataSource);
+      }
+      DSLContext ctx = DSL.using(configuration);
       return new JooqContext(requestContext, ctx);
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -41,7 +52,7 @@ public class JooqContextFactory {
   private Configuration getConfiguration(RequestContext requestContext) {
     Configuration configuration =
         new DefaultConfiguration()
-            .set(defaultDataSource)
+//            .set(defaultDataSource)
             .set(
                 new Settings()
                     .withExecuteLogging(true)

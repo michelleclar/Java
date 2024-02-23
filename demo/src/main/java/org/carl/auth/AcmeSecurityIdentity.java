@@ -4,7 +4,7 @@ import io.quarkus.security.identity.SecurityIdentity;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-@ApplicationScoped
+//@ApplicationScoped
 public class AcmeSecurityIdentity {
 
     public static final Integer MASTER_TENANT_ID = 1;

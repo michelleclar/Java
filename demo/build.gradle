@@ -12,6 +12,8 @@ repositories {
 }
 
 dependencies {
+    implementation 'io.quarkus:quarkus-jdbc-mysql'
+    implementation 'io.quarkus:quarkus-jdbc-mariadb'
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkiverse.jooq:quarkus-jooq:2.0.1'
     // implementation 'io.quarkus:quarkus-vertx-graphql'
