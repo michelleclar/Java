@@ -1,6 +1,5 @@
 package org.carl;
 
-import java.nio.charset.StandardCharsets;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import io.vertx.core.file.OpenOptions;
@@ -13,6 +12,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
+import java.nio.charset.StandardCharsets;
 
 @Path("/vertx")
 public class VertxResource {

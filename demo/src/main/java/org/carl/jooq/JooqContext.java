@@ -1,6 +1,6 @@
 package org.carl.jooq;
 
-import org.acme.util.request.RequestContext;
+
 import org.jooq.DSLContext;
 
 public class JooqContext {
