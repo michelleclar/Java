@@ -48,7 +48,8 @@ public class VertxResource {
         .transform(content -> content.toString(StandardCharsets.UTF_8) + "\n------------\n");
   }
 
-  @Inject EventBus bus;
+  @Inject 
+  EventBus bus;
 
   @GET
   @Path("/hello")

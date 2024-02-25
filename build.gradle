@@ -6,26 +6,37 @@ ext {
     postgresqlVersion = '42.6.0'
     mybatisGeneratorVersion = '1.4.2'
     mybatisPlusVersion = '3.5.5'
-    freemarkerVersion = "2.3.32"
-    hikariCPVersion = "5.1.0"
+    freemarkerVersion = '2.3.32'
+    hikariCPVersion = '5.1.0'
     mariadbVersion = '3.3.2'
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
+    apply plugin: 'maven-publish'
 
     [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
     group 'org.carl'
     version '1.0.0'
-
+    repositories {
+        // mavenLocal()
+        // maven { url 'https://maven.aliyun.com/repository/central' }
+        // maven { url 'https://maven.aliyun.com/repository/public/' }
+        // maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        //
+        // maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        // maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
+        //
+        mavenCentral()
+    }
 
     dependencies {
-
-
     }
 
     test {
         useJUnitPlatform()
     }
+
+
 }
