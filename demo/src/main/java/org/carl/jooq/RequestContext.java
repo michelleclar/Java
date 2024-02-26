@@ -1,7 +1,5 @@
 package org.carl.jooq;
 
-import org.carl.auth.AcmeSecurityIdentity;
-
 public class RequestContext {
 
     private Integer clientId;
