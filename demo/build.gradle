@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'io.quarkus'
 }
-
 dependencies {
     implementation 'io.quarkus:quarkus-jdbc-mysql'
     implementation 'io.quarkus:quarkus-jdbc-mariadb'
@@ -37,14 +36,4 @@ compileJava {
 
 compileTestJava {
     options.encoding = 'UTF-8'
-}
-
-tasks.register("createPom") {
-    pom {
-        project {
-            groupId 'org.carl'
-            artifactId 'quarkus'
-            version '1.0.0-SNAPSHOT'
-        }
-    }.writeTo("$buildDir/pom.xml")
 }

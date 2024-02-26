@@ -1,3 +1,4 @@
+
 ext {
     jooqVersion = '3.19.3'
 
@@ -10,7 +11,6 @@ ext {
     hikariCPVersion = '5.1.0'
     mariadbVersion = '3.3.2'
 }
-
 subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
@@ -21,12 +21,12 @@ subprojects {
     version '1.0.0'
     repositories {
         // mavenLocal()
-        // maven { url 'https://maven.aliyun.com/repository/central' }
-        // maven { url 'https://maven.aliyun.com/repository/public/' }
-        // maven { url 'https://maven.aliyun.com/repository/jcenter' }
-        //
-        // maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
-        // maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
+         maven { url 'https://maven.aliyun.com/repository/central' }
+         maven { url 'https://maven.aliyun.com/repository/public/' }
+         maven { url 'https://maven.aliyun.com/repository/jcenter' }
+
+         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+         maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
         //
         mavenCentral()
     }
