@@ -13,10 +13,11 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
 import java.nio.charset.StandardCharsets;
+import org.jboss.logging.Logger;
 
 @Path("/vertx")
 public class VertxResource {
-
+  private final Logger log = Logger.getLogger(VertxResource.class);
   private final Vertx vertx;
   private final WebClient client;
 
@@ -48,8 +49,7 @@ public class VertxResource {
         .transform(content -> content.toString(StandardCharsets.UTF_8) + "\n------------\n");
   }
 
-  @Inject 
-  EventBus bus;
+  @Inject EventBus bus;
 
   @GET
   @Path("/hello")

@@ -8,6 +8,7 @@ dependencies {
     implementation enforcedPlatform(libs.quarkusPlaform)
     implementation libs.bundles.jooq
     // implementation 'io.quarkus:quarkus-vertx-graphql'
+    implementation libs.slf4jJbossLogmanager
     implementation libs.bundles.allJdbc
     implementation libs.bundles.vertx
     implementation libs.bundles.quarkus
@@ -63,11 +64,11 @@ idea {
     }
 }
 
-// jooqCodeGenerator task
-task generateJooqCode(type: JavaExec) {
-    group = 'application'
-    description = 'Runs JooqCodeGenerator Java Application'
-    mainClass = 'org.acme.generator.JooqCodeGenerator'
-    classpath = sourceSets.main.runtimeClasspath
-    dependsOn('jandex')
-}
+// // jooqCodeGenerator task
+// task generateJooqCode(type: JavaExec) {
+//     group = 'application'
+//     description = 'Runs JooqCodeGenerator Java Application'
+//     mainClass = 'org.acme.generator.JooqCodeGenerator'
+//     classpath = sourceSets.main.runtimeClasspath
+//     dependsOn('jandex')
+// }

@@ -21,6 +21,7 @@ dependencyResolutionManagement {
             // versions
             version('quarkus', '3.7.3')
             version('jooq', '3.18.7')
+            version('slf4j-jboss-logmanager', '2.6.1.Final')
 
             // NOTE:quarkus
             plugin('quarkusPlugin', 'io.quarkus').versionRef('quarkus')
@@ -30,9 +31,11 @@ dependencyResolutionManagement {
             library('quarkusResteasyReactiveJackson', 'io.quarkus', 'quarkus-resteasy-reactive-jackson').versionRef('quarkus')
             library('quarkusJunit5', 'io.quarkus', 'quarkus-junit5').versionRef('quarkus')
 
+            // NOTE:slf4j-jboss-logmanager (links quarkus jboss-logging so it can log jOOQs slf4j logging)
+            library('slf4jJbossLogmanager', 'org.jboss.slf4j', 'slf4j-jboss-logmanager').versionRef('slf4j-jboss-logmanager')
             // NOTE:vert.x
             library('vertx', 'io.quarkus', 'quarkus-vertx').versionRef('quarkus')
-            library('vertxClient', 'io.smallrye.reactive','smallrye-mutiny-vertx-web-client').versionRef('quarkus')
+            library('vertxClient', 'io.smallrye.reactive', 'smallrye-mutiny-vertx-web-client').versionRef('quarkus')
 
             // NOTE:db
             library('quarkusJdbcMariadb', 'io.quarkus', 'quarkus-jdbc-mariadb').versionRef('quarkus')
