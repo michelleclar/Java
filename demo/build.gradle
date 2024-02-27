@@ -3,11 +3,10 @@ plugins {
     id 'io.quarkus'
 }
 dependencies {
-    implementation 'io.quarkus:quarkus-jdbc-mysql'
-    implementation 'io.quarkus:quarkus-jdbc-mariadb'
-    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation enforcedPlatform(libs.quarkusPlaform)
     implementation 'io.quarkiverse.jooq:quarkus-jooq:2.0.1'
     // implementation 'io.quarkus:quarkus-vertx-graphql'
+    implementation libs.quarkusJdbcMySQL 
     implementation 'io.quarkus:quarkus-vertx'
     implementation 'io.quarkus:quarkus-jdbc-postgresql'
 

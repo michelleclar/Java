@@ -28,51 +28,31 @@ dependencyResolutionManagement {
             version('jackson', '2.14.2')
             version('localstack', '0.2.23')
             version('awssdk', '2.17.51')
-    // implementation('io.quarkus:quarkus-resteasy-reactive-jackson')
-    // implementation('io.smallrye.reactive:smallrye-mutiny-vertx-web-client')
-    // implementation 'io.quarkus:quarkus-reactive-pg-client'
-    // implementation 'io.quarkus:quarkus-arc'
-    // testImplementation 'io.quarkus:quarkus-junit5'
-
-            // localstack (aws-cognito local dev)
-            // library('localstack', 'cloud.localstack', 'localstack-utils').versionRef('localstack')
-
-            // aws-sdk2
-            // library('awssdk', 'software.amazon.awssdk', 'bom').versionRef('awssdk')
-            // library('awssdkCognitoIdentityProvider', 'software.amazon.awssdk', 'cognitoidentityprovider').versionRef('awssdk')
 
             // slf4j-jboss-logmanager (links quarkus jboss-logging so it can log jOOQs slf4j logging)
             library('slf4jJbossLogmanager', 'org.jboss.slf4j', 'slf4j-jboss-logmanager').versionRef('slf4j-jboss-logmanager')
 
-            // jackson (which are not already included in quarkus-jackson
-            // library('jacksonCsv', 'com.fasterxml.jackson.dataformat', 'jackson-dataformat-csv').versionRef('jackson')
-            // library('jacksonJsr310', 'com.fasterxml.jackson.datatype', 'jackson-datatype-jsr310').versionRef('jackson')
-            library('jsckson', 'quarkus-resteasy-reactive-jackson', 'io.quarkus').versionRef('quarkus')
-            // quarkus
+            library('vertxClient', 'smallrye-mutiny-vertx-web-client', 'io.smallrye.reactive').versionRef('quarkus')
+            // NOTE:quarkus
             plugin('quarkusPlugin', 'io.quarkus').versionRef('quarkus')
             library('quarkusPlaform', 'io.quarkus.platform', 'quarkus-bom').versionRef('quarkus')
-            library('quarkusLiquibase', 'io.quarkus', 'quarkus-liquibase').versionRef('quarkus')
             library('quarkusArc', 'io.quarkus', 'quarkus-arc').versionRef('quarkus')
-            library('quarkusJdbcMariadb', 'io.quarkus', 'quarkus-jdbc-mariadb').versionRef('quarkus')
             library('quarkusResteasyReactiveJackson', 'io.quarkus', 'quarkus-resteasy-reactive-jackson').versionRef('quarkus')
             library('quarkusResteasyReactive', 'io.quarkus', 'quarkus-resteasy-reactive').versionRef('quarkus')
             library('quarkusSmallryeOpenapi', 'io.quarkus', 'quarkus-smallrye-openapi').versionRef('quarkus')
             library('quarkusJunit5', 'io.quarkus', 'quarkus-junit5').versionRef('quarkus')
-            library('quarkusHibernateValidator', 'io.quarkus', 'quarkus-hibernate-validator').versionRef('quarkus')
-            library('quarkusOidc', 'io.quarkus', 'quarkus-oidc').versionRef('quarkus')
-            library('quarkusTestSecurity', 'io.quarkus', 'quarkus-test-security').versionRef('quarkus')
-            library('quarkusTestSecurityOidc', 'io.quarkus', 'quarkus-test-security-oidc').versionRef('quarkus')
-            library('quarkusJunit5Mockito', 'io.quarkus', 'quarkus-junit5-mockito').versionRef('quarkus')
-            library('quarkusReactiveMysqlClient', 'io.quarkus', 'quarkus-reactive-mysql-client').versionRef('quarkus')
+            
+            // NOTE:vert.x
+        
 
+            // NOTE:db driver
+            library('quarkusJdbcMariadb', 'io.quarkus', 'quarkus-jdbc-mariadb').versionRef('quarkus')
+            library('quarkusJdbcMySQL', 'io.quarkus', 'quarkus-jdbc-mysql').versionRef('quarkus')
+            library('quarkusJdbcPostgreSQL', 'io.quarkus', 'quarkus-jdbc-postgresql').versionRef('quarkus')
             // mariadb-java-client
             library('mariadbJavaClient', 'org.mariadb.jdbc', 'mariadb-java-client').versionRef('mariadb-java-client')
-
-            // rest-assured
-            library('restAssured', 'io.rest-assured', 'rest-assured').versionRef('rest-assured')
-
-            // awaitility
-            library('awaitility', 'org.awaitility', 'awaitility').versionRef('awaitility')
+            library('pgRestClient', 'quarkus-reactive-pg-client', 'io.quarkus').versionRef('quarkus')
+            library('quarkusReactiveMysqlClient', 'io.quarkus', 'quarkus-reactive-mysql-client').versionRef('quarkus')
 
             // jooq
             library('jooq', 'org.jooq', 'jooq').versionRef('jooq')
@@ -89,7 +69,6 @@ dependencyResolutionManagement {
             bundle('quarkus', ['quarkusJdbcMariadb', 'quarkusResteasyReactiveJackson', 'quarkusLiquibase', 'quarkusSmallryeOpenapi', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusOidc', 'quarkusReactiveMysqlClient'])
             bundle('testcontainers', ['testcontainers', 'testcontainersMariadb'])
             bundle('jooq', ['jooq', 'jooqMeta', 'jooqCodegen'])
-            bundle('aws', ['awssdk', 'awssdkCognitoIdentityProvider'])
 
             // test-bundles
             bundle('test.quarkus', ['quarkusJunit5', 'quarkusLiquibase', 'quarkusJdbcMariadb', 'quarkusResteasyReactiveJackson', 'quarkusSmallryeOpenapi', 'quarkusHibernateValidator', 'quarkusArc', 'quarkusTestSecurity', 'quarkusTestSecurityOidc', 'quarkusJunit5Mockito'])
