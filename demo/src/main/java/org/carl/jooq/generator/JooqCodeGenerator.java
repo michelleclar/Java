@@ -7,11 +7,7 @@ import org.jooq.meta.jaxb.*;
 public class JooqCodeGenerator {
 
   public static void main(String[] args) throws Exception {
-    // Start the MariaDB test container
 
-    // Configure Liquibase
-
-    // Generate JOOQ code programmatically
     Configuration configuration =
         new Configuration()
             .withJdbc(
