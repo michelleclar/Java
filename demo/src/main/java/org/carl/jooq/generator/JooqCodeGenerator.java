@@ -1,11 +1,14 @@
 package org.carl.jooq.generator;
 
+import java.util.List;
+import java.util.Optional;
 import org.carl.commons.config.DB;
 import org.carl.commons.fields.Driver;
 import org.carl.commons.fields.JooqGen;
+import org.carl.jooq.utils.JooqConfig;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.*;
-
+import io.quarkus.logging.Log;
 import org.carl.commons.config.DataSource;
 
 public class JooqCodeGenerator {
@@ -112,14 +115,15 @@ public class JooqCodeGenerator {
   }
 
   public static void main(String[] args) throws Exception {
+    String s = "demo";
     JooqCodeGenerator.getBuilder(DB.MYSQL).setDataSourceId("db1").setSchema("db").setIncludes(".*")
         .setExcludes("").setPackageName("org.gen." + DB.MYSQL)
-        .setDirectoryName("ORM/JOOQ/src/main/java").execute();
+        .setDirectoryName(s + "/src/main/java").execute();
     JooqCodeGenerator.getBuilder(DB.MARIADB).setDataSourceId("db3").setSchema("db").setIncludes(".*")
         .setExcludes("").setPackageName("org.gen." + DB.MARIADB)
-        .setDirectoryName("ORM/JOOQ/src/main/java").execute();
+        .setDirectoryName(s + "/src/main/java").execute();
     JooqCodeGenerator.getBuilder(DB.POSTGRES).setDataSourceId("db2").setSchema("public")
         .setIncludes(".*").setExcludes("").setPackageName("org.gen." + DB.POSTGRES)
-        .setDirectoryName("ORM/JOOQ/src/main/java").execute();
+        .setDirectoryName(s + "/src/main/java").execute();
   }
 }

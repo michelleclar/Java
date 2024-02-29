@@ -15,14 +15,4 @@ public class JooqService {
   @ReactiveDataSource("pg")
   PgPool client;
 
-  @GET
-  @Path("/lorem")
-  public Uni<String> readShortFile() {
-
-    return vertx
-        .fileSystem()
-        .readFile("lorem.txt")
-        .onItem()
-        .transform(content -> content.toString(StandardCharsets.UTF_8));
-  }
 }
