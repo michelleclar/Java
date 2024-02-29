@@ -21,6 +21,7 @@ dependencyResolutionManagement {
             // versions
             version('quarkus', '3.7.3')
             version('jooq', '3.18.7')
+            version('jooqQuarkiverse','2.0.1')
             version('slf4j-jboss-logmanager', '2.6.1.Final')
 
             // NOTE:quarkus
@@ -33,11 +34,13 @@ dependencyResolutionManagement {
 
             // NOTE:slf4j-jboss-logmanager (links quarkus jboss-logging so it can log jOOQs slf4j logging)
             library('slf4jJbossLogmanager', 'org.jboss.slf4j', 'slf4j-jboss-logmanager').versionRef('slf4j-jboss-logmanager')
+
             // NOTE:vert.x
             library('vertx', 'io.quarkus', 'quarkus-vertx').versionRef('quarkus')
             library('vertxClient', 'io.smallrye.reactive', 'smallrye-mutiny-vertx-web-client').versionRef('quarkus')
 
             // NOTE:db
+            library('agroal', 'io.quarkus', 'quarkus-agroal').versionRef('quarkus')
             library('quarkusJdbcMariadb', 'io.quarkus', 'quarkus-jdbc-mariadb').versionRef('quarkus')
             library('quarkusJdbcMySQL', 'io.quarkus', 'quarkus-jdbc-mysql').versionRef('quarkus')
             library('quarkusJdbcPostgreSQL', 'io.quarkus', 'quarkus-jdbc-postgresql').versionRef('quarkus')
@@ -45,12 +48,13 @@ dependencyResolutionManagement {
             library('quarkusReactivePgClient', 'io.quarkus', 'quarkus-reactive-pg-client').versionRef('quarkus')
             library('quarkusReactiveMysqlClient', 'io.quarkus', 'quarkus-reactive-mysql-client').versionRef('quarkus')
 
-            // jooq
-            library('jooq', 'org.jooq', 'jooq').versionRef('jooq')
+            // NOTE:jooq
+            // library('jooq', 'org.jooq', 'jooq').versionRef('jooq')
+            library('jooq', 'io.quarkiverse', 'quarkus-jooq').versionRef('jooqQuarkiverse')
             library('jooqMeta', 'org.jooq', 'jooq-meta').versionRef('jooq')
             library('jooqCodegen', 'org.jooq', 'jooq-codegen').versionRef('jooq')
 
-            // bundles
+            // NOTE:bundles
             bundle('quarkus', ['quarkusResteasyReactiveJackson', 'quarkusArc', 'quarkusJunit5'])
 
             bundle('jooq', ['jooq', 'jooqMeta', 'jooqCodegen'])

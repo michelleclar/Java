@@ -18,6 +18,7 @@ public class JooqService {
   @GET
   @Path("/lorem")
   public Uni<String> readShortFile() {
+
     return vertx
         .fileSystem()
         .readFile("lorem.txt")
