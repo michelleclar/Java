@@ -9,6 +9,7 @@ dependencies {
     implementation libs.bundles.jooq
     // implementation 'io.quarkus:quarkus-vertx-graphql'
     implementation libs.slf4jJbossLogmanager
+    implementation libs.agroal
     implementation libs.bundles.allJdbc
     implementation libs.bundles.vertx
     implementation libs.bundles.quarkus
