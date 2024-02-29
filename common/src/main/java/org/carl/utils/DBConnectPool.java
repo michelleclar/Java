@@ -27,34 +27,6 @@ public class DBConnectPool {
     _initByMyDB(dbTypeAndSourceIdMap);
   }
 
-  // {
-  // HikariConfig hikariConfig = new HikariConfig();
-  // hikariConfig.setPoolName("HikariCP 连接池");
-  // hikariConfig.setDataSourceClassName("oracle.jdbc.pool.OracleDataSource");
-  // hikariConfig.addDataSourceProperty("user", "test");
-  // hikariConfig.addDataSourceProperty("password", "123456");
-  // hikariConfig.addDataSourceProperty("url", "jdbc:oracle:thin:@10.49.196.10:1521:test");
-  // hikariConfig.setMaximumPoolSize(15);
-  //
-  // HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
-  // Connection connection = null;
-  // try {
-  // connection = hikariDataSource.getConnection();
-  // Statement st = connection.createStatement();
-  // ResultSet rs = st.executeQuery("select * from v$version");
-  // if (rs.next()) {
-  // logger.info(rs.getString(1));
-  // }
-  // } catch (SQLException e) {
-  // e.printStackTrace();
-  // } finally {
-  // close(connection);
-  // }
-  //
-  // // 实际使用中一般是在应用启动时初始化数据源，应用从数据源中获取连接；并不会关闭数据源。
-  // hikariDataSource.close();
-  // }
-
   static void initByMyDB(Map<String, List<String>> dbTypeAndSourceIdMap) {
     dbTypeAndSourceIdMap.forEach((k, v) -> {
       String driverClassName = Driver.MYSQL;

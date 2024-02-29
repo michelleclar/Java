@@ -69,3 +69,4 @@ dependencyResolutionManagement {
 rootProject.name = 'Java'
 // include 'code-with-quarkus'
 include 'demo'
+include 'common'

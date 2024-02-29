@@ -5,6 +5,7 @@ plugins {
     id 'org.kordamp.gradle.jandex'
 }
 dependencies {
+    implementation project(':common')
     implementation enforcedPlatform(libs.quarkusPlaform)
     implementation libs.bundles.jooq
     // implementation 'io.quarkus:quarkus-vertx-graphql'

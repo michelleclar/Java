@@ -1,57 +1,125 @@
 package org.carl.jooq.generator;
 
+import org.carl.commons.config.DB;
+import org.carl.commons.fields.Driver;
+import org.carl.commons.fields.JooqGen;
 import org.jooq.codegen.GenerationTool;
-import org.jooq.meta.jaxb.Configuration;
-import org.jooq.meta.jaxb.Database;
-import org.jooq.meta.jaxb.ForcedType;
-import org.jooq.meta.jaxb.Generate;
-import org.jooq.meta.jaxb.Jdbc;
-import org.jooq.meta.jaxb.Strategy;
-import org.jooq.meta.jaxb.Target;
-import io.vertx.codegen.Generator;
-import jakarta.inject.Inject;
+import org.jooq.meta.jaxb.*;
+
+import org.carl.commons.config.DataSource;
 
 public class JooqCodeGenerator {
-  @Inject
-  static DataSourceConfig mysql;
-   
+  static JooqCodeGenerator DEFAULT_INSTANCE;
+
+  static {
+    DEFAULT_INSTANCE = new JooqCodeGenerator();
+  }
+
+  public void gen(String driver, String jooqGenDatabase, DataSource dataSource, String schema,
+      String includes, String excludes, String packageName, String directoryName) {
+    // jooq generator config
+    Configuration configuration = new Configuration()
+        .withJdbc(new Jdbc().withDriver(driver).withUrl(dataSource.getJdbcUrl())
+            .withUser(dataSource.getUsername()).withPassword(dataSource.getPassword()))
+        .withGenerator(
+                new Generator()
+            .withDatabase(new Database().withName(jooqGenDatabase).withInputSchema(schema) // 数据库模式
+                .withIncludes(includes) // 包含生成的表
+                .withExcludes(excludes)) // 排除不生成的表
+            .withGenerate(new Generate().withPojos(true) // 生成POJO类
+                .withDaos(true)) // 生成DAO类
+            .withTarget(new Target().withPackageName(packageName) // 生成类的包名
+                .withDirectory(directoryName))); // 生成类的输出目录
+
+    // execute
+    try {
+      GenerationTool.generate(configuration);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static Builder getBuilder(String type) {
+    return new Builder(type);
+  }
+
+  public static final class Builder {
+    Builder(String type) {
+      this.type = type;
+      switch (this.type) {
+        case DB.MYSQL -> {
+          this.driver = Driver.MYSQL;
+          this.jooqGenDatabase = JooqGen.MYSQL;
+        }
+        case DB.POSTGRES -> {
+          this.driver = Driver.POSTGRES;
+          this.jooqGenDatabase = JooqGen.POSTGRES;
+        }
+        case DB.MARIADB -> {
+          this.driver = Driver.MARIADB;
+          this.jooqGenDatabase = JooqGen.MARIADB;
+        }
+        default -> throw new RuntimeException("not supported this driver");
+      }
+    }
+
+    String driver;
+    String jooqGenDatabase;
+    DataSource dataSource;
+    String schema;
+    String includes;
+    String excludes;
+    String packageName;
+    String directoryName;
+    String dataSourceId;
+    String type;
+
+    public Builder setSchema(String schema) {
+      this.schema = schema;
+      return this;
+    }
+
+    public Builder setIncludes(String includes) {
+      this.includes = includes;
+      return this;
+    }
+
+    public Builder setExcludes(String excludes) {
+      this.excludes = excludes;
+      return this;
+    }
+
+    public Builder setPackageName(String packageName) {
+      this.packageName = packageName;
+      return this;
+    }
+
+    public Builder setDirectoryName(String directoryName) {
+      this.directoryName = directoryName;
+      return this;
+    }
+
+    public Builder setDataSourceId(String id) {
+      this.dataSourceId = id;
+      this.dataSource = DB.getDataSource(this.type, id);
+      return this;
+    }
+
+    public void execute() {
+      DEFAULT_INSTANCE.gen(this.driver, this.jooqGenDatabase, this.dataSource, this.schema,
+          this.includes, this.excludes, this.packageName, this.directoryName);
+    }
+  }
 
   public static void main(String[] args) throws Exception {
-    
-
-    Configuration configuration =
-        new Configuration()
-            .withJdbc(
-                new Jdbc()
-                    .withDriver("org.mariadb.jdbc.Driver")
-                    .withUrl(mysql.getJdbcUrl())
-                    .withUser(mysql.getUserName())
-                    .withPassword(mysql.getPassword()))
-            .withGenerator(
-                new Generator()
-                    .withName("org.acme.generator.MyGenerator")
-                    .withGenerate(
-                        new Generate()
-                            .withInterfaces(true)
-                            .withSerializableInterfaces(true)
-                            .withDaos(true)
-                            .withValidationAnnotations(true)
-                            .withPojosEqualsAndHashCode(true))
-                    .withStrategy(new Strategy().withName("org.acme.generator.MyGeneratorStrategy"))
-                    .withDatabase(
-                        new Database()
-                            .withName("org.jooq.meta.mariadb.MariaDBDatabase")
-                            .withIncludes("jooq_testshop.*")
-                            .withExcludes("")
-                            .withForcedTypes(
-                                new ForcedType()
-                                    .withName("BOOLEAN")
-                                    .withIncludeTypes("(?i:TINYINT\\(1\\))")))
-                    .withTarget(
-                        new Target()
-                            .withPackageName("org.acme.generated")
-                            .withDirectory("src/main/generated")));
-
-    GenerationTool.generate(configuration);
+    JooqCodeGenerator.getBuilder(DB.MYSQL).setDataSourceId("db1").setSchema("db").setIncludes(".*")
+        .setExcludes("").setPackageName("org.gen." + DB.MYSQL)
+        .setDirectoryName("ORM/JOOQ/src/main/java").execute();
+    JooqCodeGenerator.getBuilder(DB.MARIADB).setDataSourceId("db3").setSchema("db").setIncludes(".*")
+        .setExcludes("").setPackageName("org.gen." + DB.MARIADB)
+        .setDirectoryName("ORM/JOOQ/src/main/java").execute();
+    JooqCodeGenerator.getBuilder(DB.POSTGRES).setDataSourceId("db2").setSchema("public")
+        .setIncludes(".*").setExcludes("").setPackageName("org.gen." + DB.POSTGRES)
+        .setDirectoryName("ORM/JOOQ/src/main/java").execute();
   }
 }
