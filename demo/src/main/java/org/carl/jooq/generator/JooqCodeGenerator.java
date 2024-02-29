@@ -1,9 +1,5 @@
 package org.carl.jooq.generator;
 
-import io.agroal.api.AgroalDataSource;
-import io.quarkus.agroal.DataSource;
-import io.vertx.codegen.Generator;
-import jakarta.inject.Inject;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Database;
@@ -12,8 +8,12 @@ import org.jooq.meta.jaxb.Generate;
 import org.jooq.meta.jaxb.Jdbc;
 import org.jooq.meta.jaxb.Strategy;
 import org.jooq.meta.jaxb.Target;
+import io.vertx.codegen.Generator;
+import jakarta.inject.Inject;
 
 public class JooqCodeGenerator {
+  @Inject
+  static DataSourceConfig mysql;
    
 
   public static void main(String[] args) throws Exception {
@@ -24,9 +24,9 @@ public class JooqCodeGenerator {
             .withJdbc(
                 new Jdbc()
                     .withDriver("org.mariadb.jdbc.Driver")
-                    .withUrl(container.getJdbcUrl())
-                    .withUser(container.getUsername())
-                    .withPassword(container.getPassword()))
+                    .withUrl(mysql.getJdbcUrl())
+                    .withUser(mysql.getUserName())
+                    .withPassword(mysql.getPassword()))
             .withGenerator(
                 new Generator()
                     .withName("org.acme.generator.MyGenerator")
