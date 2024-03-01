@@ -33,7 +33,6 @@ dependencyResolutionManagement {
             library('quarkusResteasyReactiveJackson', 'io.quarkus', 'quarkus-resteasy-reactive-jackson').versionRef('quarkus')
             library('quarkusJunit5', 'io.quarkus', 'quarkus-junit5').versionRef('quarkus')
 
-            library('flywayDeployment', 'io.quarkus', 'quarkus-flyway-deployment').versionRef('quarkus')
             library('flyway', 'io.quarkus', 'quarkus-flyway').versionRef('quarkus')
 
             // NOTE:slf4j-jboss-logmanager (links quarkus jboss-logging so it can log jOOQs slf4j logging)
@@ -73,7 +72,7 @@ dependencyResolutionManagement {
             bundle('allJdbc',  ['quarkusJdbcMariadb', 'quarkusJdbcMySQL', 'quarkusJdbcPostgreSQL'])
             bundle('allDBReactiveClient', ['quarkusReactivePgClient', 'quarkusReactiveMysqlClient'])
 
-            bundle('testcontainers', ['testcontainers', 'testcontainersPg','flyway','flywayDeployment'])
+            bundle('testcontainers', ['testcontainers', 'testcontainersPg','flyway'])
             // test-bundles
             bundle('test.quarkus', ['quarkusJunit5',  'quarkusJdbcPostgreSQL', 'quarkusResteasyReactiveJackson', 'quarkusSmallryeOpenapi', 'quarkusArc', ])
             bundle('test.testcontainers', ['testcontainers', 'testcontainersPg', 'testcontainersJunitJupiter'])
