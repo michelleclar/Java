@@ -115,15 +115,15 @@ public class JooqCodeGenerator {
   }
 
   public static void main(String[] args) throws Exception {
-    String s = "demo";
+//    String s = "demo";
     JooqCodeGenerator.getBuilder(DB.MYSQL).setDataSourceId("db1").setSchema("db").setIncludes(".*")
         .setExcludes("").setPackageName("org.gen." + DB.MYSQL)
-        .setDirectoryName(s + "/src/main/java").execute();
+        .setDirectoryName("src/main/java").execute();
     JooqCodeGenerator.getBuilder(DB.MARIADB).setDataSourceId("db3").setSchema("db").setIncludes(".*")
         .setExcludes("").setPackageName("org.gen." + DB.MARIADB)
-        .setDirectoryName(s + "/src/main/java").execute();
+        .setDirectoryName("src/main/java").execute();
     JooqCodeGenerator.getBuilder(DB.POSTGRES).setDataSourceId("db2").setSchema("public")
         .setIncludes(".*").setExcludes("").setPackageName("org.gen." + DB.POSTGRES)
-        .setDirectoryName(s + "/src/main/java").execute();
+        .setDirectoryName("src/main/java").execute();
   }
 }

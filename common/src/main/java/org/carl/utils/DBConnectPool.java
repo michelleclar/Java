@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DBConnectPool {
-  static Logger logger = LoggerFactory.getLogger(DBConnectPool.class);
   static Map<String, Map<String, HikariDataSource>> use = new HashMap<>();
 
   static {
@@ -105,9 +104,5 @@ public class DBConnectPool {
 
   public static void watch(HikariDataSource h) {
     HikariPoolMXBean hikariPoolMXBean = h.getHikariPoolMXBean();
-    logger.info("Active Connection: {}", hikariPoolMXBean.getActiveConnections());
-    logger.info("Idle Connection: {}", hikariPoolMXBean.getIdleConnections());
-    logger.info("Threads Waiting for Connection: {}",
-        hikariPoolMXBean.getThreadsAwaitingConnection());
   }
 }
