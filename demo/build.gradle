@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'io.quarkus'
-    id 'org.kordamp.gradle.jandex'
+//    id 'org.kordamp.gradle.jandex'
 }
 dependencies {
     implementation project(':common')
@@ -37,25 +37,37 @@ compileTestJava {
     options.encoding = 'UTF-8'
 }
 
-tasks.register('write') {
-    // read file
-    def properties = new Properties()
-    file('src/main/resources/application.properties').withInputStream {
-        stream -> properties.load(stream)
-    }
-
-    println properties.getProperty('quarkus.datasource.jdbc.url')
-    println properties.getProperty('quarkus.datasource.username')
-    println properties.getProperty('quarkus.datasource.password')
-
-    new File('src/main/resources/db.properties').withWriter('UTF-8') { writer ->
-        writer.writeLine(properties.getProperty('quarkus.datasource.jdbc.url'))
-        writer.writeLine(properties.getProperty('quarkus.datasource.username'))
-        writer.writeLine(properties.getProperty('quarkus.datasource.password'))
-    }
-
-
-}
+//tasks.register('write') {
+//    // read file
+//    def properties = new Properties()
+//    file('src/main/resources/application.properties').withInputStream {
+//        stream -> properties.load(stream)
+//    }
+//    def framework = 'quarkus'
+//    def datasource = ''
+//    switch (framework){
+//        case 'quarkus':
+//            datasource='quarkus.datasource'
+//            break
+//        case 'spring' :
+//            datasource='spring.datasource'
+//            break
+//    }
+//
+//    println properties.getProperty('quarkus.datasource.jdbc.url')
+//    println properties.getProperty('quarkus.datasource.username')
+//    println properties.getProperty('quarkus.datasource.password')
+//    properties.forEach((k,v)->{
+//        println(k)
+//        println(v)
+//    })
+//    new File('src/main/resources/db.properties').withWriter('UTF-8') { writer ->
+//        writer.writeLine(properties.getProperty('quarkus.datasource.jdbc.url'))
+//        writer.writeLine(properties.getProperty('quarkus.datasource.username'))
+//        writer.writeLine(properties.getProperty('quarkus.datasource.password'))
+//    }
+//
+//}
 // configure generated/src-directories, necessary for use in intellij-idea.
 def mySrcDir = 'src/main/java'
 def generatedDir = 'src/main/generated'
@@ -76,10 +88,9 @@ idea {
 }
 
 // jooqCodeGenerator task
-task generateJooqCode(type: JavaExec) {
+tasks.register('generateJooqCode', JavaExec) {
     group = 'application'
     description = 'Runs JooqCodeGenerator Java Application'
     mainClass = 'org.carl.jooq.generator.JooqCodeGenerator'
     classpath = sourceSets.main.runtimeClasspath
-    dependsOn('jandex')
 }
