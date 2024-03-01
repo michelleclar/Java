@@ -1,15 +1,20 @@
 package org.carl.jooq.generator;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.Duration;
 import org.carl.commons.config.DB;
+import org.carl.commons.config.DataSource;
 import org.carl.commons.fields.Driver;
 import org.carl.commons.fields.JooqGen;
-import org.carl.jooq.utils.JooqConfig;
 import org.jooq.codegen.GenerationTool;
-import org.jooq.meta.jaxb.*;
-import io.quarkus.logging.Log;
-import org.carl.commons.config.DataSource;
+import org.jooq.meta.jaxb.Configuration;
+import org.jooq.meta.jaxb.Database;
+import org.jooq.meta.jaxb.Generate;
+import org.jooq.meta.jaxb.Generator;
+import org.jooq.meta.jaxb.Jdbc;
+import org.jooq.meta.jaxb.Target;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.shaded.org.awaitility.Awaitility;
+import org.testcontainers.utility.DockerImageName;
 
 public class JooqCodeGenerator {
   static JooqCodeGenerator DEFAULT_INSTANCE;
@@ -24,8 +29,7 @@ public class JooqCodeGenerator {
     Configuration configuration = new Configuration()
         .withJdbc(new Jdbc().withDriver(driver).withUrl(dataSource.getJdbcUrl())
             .withUser(dataSource.getUsername()).withPassword(dataSource.getPassword()))
-        .withGenerator(
-                new Generator()
+        .withGenerator(new Generator()
             .withDatabase(new Database().withName(jooqGenDatabase).withInputSchema(schema) // 数据库模式
                 .withIncludes(includes) // 包含生成的表
                 .withExcludes(excludes)) // 排除不生成的表
@@ -114,16 +118,56 @@ public class JooqCodeGenerator {
     }
   }
 
-  public static void main(String[] args) throws Exception {
-//    String s = "demo";
+  static void codeGenByDB() {
+    // String s = "demo";
     JooqCodeGenerator.getBuilder(DB.MYSQL).setDataSourceId("db1").setSchema("db").setIncludes(".*")
-        .setExcludes("").setPackageName("org.gen." + DB.MYSQL)
-        .setDirectoryName("src/main/java").execute();
-    JooqCodeGenerator.getBuilder(DB.MARIADB).setDataSourceId("db3").setSchema("db").setIncludes(".*")
-        .setExcludes("").setPackageName("org.gen." + DB.MARIADB)
+        .setExcludes("").setPackageName("org.gen." + DB.MYSQL).setDirectoryName("src/main/java")
+        .execute();
+    JooqCodeGenerator.getBuilder(DB.MARIADB).setDataSourceId("db3").setSchema("db")
+        .setIncludes(".*").setExcludes("").setPackageName("org.gen." + DB.MARIADB)
         .setDirectoryName("src/main/java").execute();
     JooqCodeGenerator.getBuilder(DB.POSTGRES).setDataSourceId("db2").setSchema("public")
         .setIncludes(".*").setExcludes("").setPackageName("org.gen." + DB.POSTGRES)
         .setDirectoryName("src/main/java").execute();
   }
+
+  static void codeGenByContainers() throws Exception {
+    PostgreSQLContainer container =
+        new PostgreSQLContainer<>(DockerImageName.parse("postgres:latest")).withDatabaseName("db")
+            .withUsername("root").withPassword("root");
+    container.start();
+    Awaitility.await().atMost(Duration.ofSeconds(30)).pollInterval(Duration.ofSeconds(1))
+        .until(container::isRunning);
+
+    String currentDirectory = System.getProperty("user.dir");
+    System.out.println("Current working directory is: " + currentDirectory);
+    try {
+      // Generate JOOQ code programmatically
+      Configuration configuration =
+          new Configuration()
+              .withJdbc(
+                  new Jdbc()
+                      .withDriver(
+                          "org.postgresql.Driver")
+                      .withUrl(container.getJdbcUrl()).withUser(container.getUsername())
+                      .withPassword(container.getPassword()))
+              .withGenerator(new Generator()
+                  .withDatabase(new Database().withName("org.jooq.meta.postgres.PostgresDatabase")
+                      .withInputSchema("db") // 数据库模式
+                      .withIncludes(".*") // 包含生成的表
+                      .withExcludes("")) // 排除不生成的表
+                  .withGenerate(new Generate().withPojos(true) // 生成POJO类
+                      .withDaos(true)) // 生成DAO类
+                  .withTarget(new Target().withPackageName("org.acme.generated") // 生成类的包名
+                      .withDirectory("src/main/generated"))); // 生成类的输出目录
+
+      GenerationTool.generate(configuration);
+
+    } finally {
+      // Stop the MariaDB test container
+      container.stop();
+    }
+  }
+
+  public static void main(String[] args) throws Exception {}
 }

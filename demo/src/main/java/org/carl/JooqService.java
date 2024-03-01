@@ -25,7 +25,6 @@ import jakarta.ws.rs.Path;
 public class JooqService {
 
   @Inject
-  @ReactiveDataSource("pg")
   PgPool client;
 
   @Inject
@@ -33,7 +32,6 @@ public class JooqService {
   boolean schemaCreate;
 
   @Inject
-  @DataSource("pg")
   AgroalDataSource pgDataSource;
 
   void config(@Observes StartupEvent ev) {

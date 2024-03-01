@@ -15,6 +15,7 @@ dependencies {
     implementation libs.bundles.vertx
     implementation libs.bundles.quarkus
     implementation libs.bundles.allDBReactiveClient
+    implementation libs.bundles.testcontainers
 }
 
 group 'org.carl'
