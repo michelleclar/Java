@@ -1,4 +1,4 @@
-package org.carl;
+package org.carl.vert;
 
 import io.quarkus.vertx.ConsumeEvent;
 import jakarta.enterprise.context.ApplicationScoped;
