@@ -1,7 +1,5 @@
-create database db;
-
-drop table if exists "db"."public"."user";
-CREATE TABLE "db"."public"."user" (
+drop table if exists "public"."user";
+CREATE TABLE "public"."user" (
     id SERIAL PRIMARY KEY,
     user_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -23,7 +21,12 @@ $$ LANGUAGE plpgsql;
 
 -- 创建一个触发器，当更新行时调用上面定义的函数
 CREATE TRIGGER trigger_update_updated_at
-BEFORE UPDATE ON "db"."public"."user"
+BEFORE UPDATE ON "public"."user"
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at();
 
+DROP TABLE IF EXISTS fruits
+CREATE TABLE fruits (id SERIAL PRIMARY KEY, name TEXT NOT NULL)
+INSERT INTO fruits (name) VALUES ('Orange')
+INSERT INTO fruits (name) VALUES ('Pear')
+INSERT INTO fruits (name) VALUES ('Apple')

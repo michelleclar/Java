@@ -1,9 +1,6 @@
 package org.carl;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import org.carl.jooq.utils.JooqConfig;
 import org.jboss.logging.Logger;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
@@ -60,11 +57,6 @@ public class VertxResource {
     return bus.<String>request("greetings", name).onItem().transform(response -> response.body());
   }
 
-  @GET
-  @Path("/config")
-  public Object config() throws IOException{
-    return JooqConfig.readDataSources().get();
-  }
 
   private static final String URL =
       "https://en.wikipedia.org/w/api.php?action=parse&page=Quarkus&format=json&prop=langlinks";

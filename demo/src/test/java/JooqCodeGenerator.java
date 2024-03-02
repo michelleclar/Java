@@ -1,5 +1,3 @@
-package org.carl.jooq.generator;
-
 import java.time.Duration;
 import org.carl.commons.config.DB;
 import org.carl.commons.config.DataSource;
@@ -164,10 +162,11 @@ public class JooqCodeGenerator {
       GenerationTool.generate(configuration);
 
     } finally {
-      // Stop the MariaDB test container
       container.stop();
     }
   }
 
-  public static void main(String[] args) throws Exception {}
+  public static void main(String[] args) throws Exception {
+    codeGenByContainers();
+  }
 }

@@ -11,11 +11,11 @@ dependencies {
     // implementation 'io.quarkus:quarkus-vertx-graphql'
     implementation libs.slf4jJbossLogmanager
     implementation libs.agroal
-    implementation libs.bundles.allJdbc
+    implementation libs.bundles.postgresql
     implementation libs.bundles.vertx
     implementation libs.bundles.quarkus
-    implementation libs.bundles.allDBReactiveClient
-    implementation libs.bundles.testcontainers
+    testCompileOnly libs.bundles.testcontainers
+    implementation libs.mongodb
 }
 
 group 'org.carl'

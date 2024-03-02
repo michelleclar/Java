@@ -1,5 +1,11 @@
-# demo
+# quarkus
 
+- [ ] db(PostgreSQL,mongodb,redis) 
+- [ ] mq(pulsar)
+
+> use Flyway init db
+
+> write for quarkus
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .

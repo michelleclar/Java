@@ -1,21 +1,15 @@
-package org.carl;
+package org.carl.jooq;
 
 import java.util.List;
-import org.carl.jooq.JooqContext;
-import org.carl.jooq.JooqContextFactory;
-import org.carl.jooq.RequestContext;
-import org.carl.model.Fruit;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.gen.postgres.Tables;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import io.agroal.api.AgroalDataSource;
-import io.quarkus.agroal.DataSource;
-import io.quarkus.reactive.datasource.ReactiveDataSource;
 import io.quarkus.runtime.StartupEvent;
 import io.smallrye.mutiny.Multi;
 import io.vertx.mutiny.pgclient.PgPool;
-import io.vertx.mutiny.sqlclient.SqlConnection;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;

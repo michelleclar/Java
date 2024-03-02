@@ -50,6 +50,7 @@ dependencyResolutionManagement {
 
             library('quarkusReactivePgClient', 'io.quarkus', 'quarkus-reactive-pg-client').versionRef('quarkus')
             library('quarkusReactiveMysqlClient', 'io.quarkus', 'quarkus-reactive-mysql-client').versionRef('quarkus')
+            library('mongodb', 'io.quarkus', 'quarkus-mongodb-client').versionRef('quarkus')
 
             // NOTE:jooq
             // library('jooq', 'org.jooq', 'jooq').versionRef('jooq')
@@ -68,11 +69,12 @@ dependencyResolutionManagement {
             bundle('jooq', ['jooq', 'jooqMeta', 'jooqCodegen'])
 
             bundle('vertx', ['vertx', 'vertxClient'])
+            bundle('postgresql',['quarkusJdbcPostgreSQL','quarkusReactivePgClient'])
 
             bundle('allJdbc',  ['quarkusJdbcMariadb', 'quarkusJdbcMySQL', 'quarkusJdbcPostgreSQL'])
             bundle('allDBReactiveClient', ['quarkusReactivePgClient', 'quarkusReactiveMysqlClient'])
 
-            bundle('testcontainers', ['testcontainers', 'testcontainersPg','flyway'])
+            bundle('testcontainers', ['testcontainers', 'testcontainersPg', 'flyway'])
             // test-bundles
             bundle('test.quarkus', ['quarkusJunit5',  'quarkusJdbcPostgreSQL', 'quarkusResteasyReactiveJackson', 'quarkusSmallryeOpenapi', 'quarkusArc', ])
             bundle('test.testcontainers', ['testcontainers', 'testcontainersPg', 'testcontainersJunitJupiter'])
