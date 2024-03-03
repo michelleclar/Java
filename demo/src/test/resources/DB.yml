@@ -1,0 +1,16 @@
+DB:
+  - Driver: mysql
+    id: db1
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/db
+    userName: root
+    password: root
+  - Driver: postgres
+    id: db2
+    jdbcUrl: jdbc:postgresql://127.0.0.1:5432/db
+    userName: root
+    password: root
+  - Driver: mariadb
+    id: db3
+    jdbcUrl: jdbc:mariadb://127.0.0.1:13306/db
+    userName: root
+    password: root

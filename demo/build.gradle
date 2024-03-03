@@ -7,15 +7,12 @@ plugins {
 dependencies {
     implementation project(':common')
     implementation enforcedPlatform(libs.quarkusPlaform)
-    implementation libs.bundles.jooq
     // implementation 'io.quarkus:quarkus-vertx-graphql'
-    implementation libs.slf4jJbossLogmanager
-    implementation libs.agroal
-    implementation libs.bundles.postgresql
-    implementation libs.bundles.vertx
     implementation libs.bundles.quarkus
-    testCompileOnly libs.bundles.testcontainers
-    implementation libs.mongodb
+    implementation libs.bundles.base
+    implementation libs.assured
+    testCompileOnly libs.bundles.test
+
 }
 
 group 'org.carl'

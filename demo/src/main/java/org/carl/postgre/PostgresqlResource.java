@@ -1,4 +1,4 @@
-package org.carl.jooq;
+package org.carl.postgre;
 
 import java.util.List;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -15,8 +15,8 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 
-@Path("/jooq")
-public class JooqService {
+@Path("/postgres")
+public class PostgresqlResource {
 
   @Inject
   PgPool client;
