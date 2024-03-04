@@ -1,4 +1,4 @@
-package org.carl.jooq;
+package org.carl.jooq.generator;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jooq.codegen.GenerationTool;
