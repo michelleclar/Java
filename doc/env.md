@@ -57,3 +57,18 @@ services:
     tty: true
     stdin_open: true
 ```
+```yml
+
+version: '3.9'
+services:
+    pulsar-manager:
+        image: 'apachepulsar/pulsar-manager:v0.3.0'
+        environment:
+            - SPRING_CONFIGURATION_FILE=/pulsar-manager/pulsar-manager/application.properties
+        ports:
+            - '7750:7750'
+            - '9527:9527'
+        tty: true
+        stdin_open: true
+
+```
