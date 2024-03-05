@@ -83,7 +83,7 @@ dependencyResolutionManagement {
             bundle('postgresql', ['quarkusJdbcPostgreSQL', 'quarkusReactivePgClient'])
 
             // TODO:consul ---> kubernetes
-            bundle('base', ['quarkusJdbcPostgreSQL', 'quarkusReactivePgClient', 'agroal', 'vertx', 'vertxClient', 'mongodb', 'redis', 'jooq', 'jooqMeta', 'jooqCodegen', 'slf4jJbossLogmanager', 'consulStork', 'consulClient','puslar','gRPC'])
+            bundle('base', ['quarkusJdbcPostgreSQL', 'quarkusReactivePgClient', 'agroal', 'vertx', 'vertxClient', 'mongodb', 'redis', 'jooq', 'jooqMeta', 'jooqCodegen', 'slf4jJbossLogmanager', 'consulStork', 'consulClient','gRPC'])
 
             bundle('allJdbc',  ['quarkusJdbcMariadb', 'quarkusJdbcMySQL', 'quarkusJdbcPostgreSQL'])
             bundle('allDBReactiveClient', ['quarkusReactivePgClient', 'quarkusReactiveMysqlClient'])
