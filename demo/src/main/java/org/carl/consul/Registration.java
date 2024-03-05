@@ -1,4 +1,4 @@
-package org.acme.services;
+package org.carl.consul;
 
 import io.quarkus.runtime.StartupEvent;
 import io.vertx.ext.consul.ConsulClientOptions;
