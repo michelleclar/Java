@@ -16,7 +16,7 @@ dependencies {
 }
 
 group 'org.carl'
-version '1.0.0-SNAPSHOT'
+version '3.0.0-SNAPSHOT'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -59,7 +59,7 @@ compileTestJava {
 //        println(k)
 //        println(v)
 //    })
-//    new File('src/main/resources/db.properties').withWriter('UTF-8') { writer ->
+//    new File('src/main/resources/db.properties').withWriter('UTF-6') { writer ->
 //        writer.writeLine(properties.getProperty('quarkus.datasource.jdbc.url'))
 //        writer.writeLine(properties.getProperty('quarkus.datasource.username'))
 //        writer.writeLine(properties.getProperty('quarkus.datasource.password'))
@@ -85,7 +85,6 @@ idea {
     }
 }
 
-// jooqCodeGenerator task
 tasks.register('generateJooqCode', JavaExec) {
     group = 'application'
     description = 'Runs JooqCodeGenerator Java Application'

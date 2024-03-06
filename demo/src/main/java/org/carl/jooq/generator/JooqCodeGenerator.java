@@ -1,5 +1,7 @@
 package org.carl.jooq.generator;
 
+import jakarta.inject.Inject;
+import org.eclipse.microprofile.config.ConfigProvider;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
@@ -10,14 +12,12 @@ import org.jooq.meta.jaxb.Jdbc;
 import org.jooq.meta.jaxb.Target;
 
 public class JooqCodeGenerator {
-  @ConfigProperty(name = "quarkus.datasource.jdbc.url")
-  static String jdbcUrl;
 
-  @ConfigProperty(name = "quarkus.datasource.username")
-  static String username;
+  static String jdbcUrl = ConfigProvider.getConfig().getValue("quarkus.datasource.jdbc.url", String.class);
 
-  @ConfigProperty(name = "quarkus.datasource.password")
-  static String password;
+  static String username = ConfigProvider.getConfig().getValue("quarkus.datasource.username", String.class);
+
+  static String password = ConfigProvider.getConfig().getValue("quarkus.datasource.password", String.class);
 
   static void codeGenByContainers() throws Exception {
 

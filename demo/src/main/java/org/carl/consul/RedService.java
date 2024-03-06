@@ -9,7 +9,7 @@ import jakarta.enterprise.event.Observes;
 
 @ApplicationScoped
 public class RedService {
-    @ConfigProperty(name = "red-service-port", defaultValue = "9001") int port;
+    @ConfigProperty(name = "red-service-port", defaultValue = "10001") int port;
 
     /**
      * Start an HTTP server for the red service.

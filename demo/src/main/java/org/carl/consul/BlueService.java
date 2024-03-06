@@ -10,7 +10,7 @@ import jakarta.enterprise.event.Observes;
 @ApplicationScoped
 public class BlueService {
 
-    @ConfigProperty(name = "blue-service-port", defaultValue = "9000") int port;
+    @ConfigProperty(name = "blue-service-port", defaultValue = "10000") int port;
 
     /**
      * Start an HTTP server for the blue service.
