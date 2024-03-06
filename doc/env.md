@@ -14,6 +14,23 @@ services:
     ports:
       - "5432:5432"
     restart: no
+  # mysql:
+  #   container_name: mysql
+  #   image: mysql:latest
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #   ports:
+  #     - "3306:3306"
+  #     - "33060:33060"
+  #   restart: no
+  # mariadb:
+  #   container_name: mariadb
+  #   image: mariadb:latest
+  #   environment:
+  #     MARIADB_ROOT_PASSWORD: root
+  #   ports:
+  #     - "13306:3306"
+  #   restart: no
   mongo:
     image: "mongo:latest"
     container_name: mongodb
@@ -21,9 +38,7 @@ services:
       - "27017:27017"
   pulsar:
     command: "bin/pulsar standalone"
-    container_name: pulsar
     image: "apachepulsar/pulsar:3.1.2"
-    hostname: pulsar
     ports:
       - "9080:8080"
       - "6650:6650"
@@ -43,7 +58,6 @@ services:
     container_name: redis
     tty: true
     stdin_open: true
-
 ```
 ```yml
 

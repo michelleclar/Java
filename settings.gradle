@@ -64,7 +64,7 @@ dependencyResolutionManagement {
             library('consul', 'io.quarkiverse.config', 'quarkus-config-consul').versionRef('consul')
             library('consulStork', 'io.smallrye.stork', 'stork-service-discovery-consul').versionRef('quarkus')
             library('consulClient', 'io.smallrye.reactive', 'smallrye-mutiny-vertx-consul-client').versionRef('quarkus')
-            library('puslar', 'io.quarkus', 'quarkus-smallrye-reactive-messaging-pulsar').versionRef('quarkus')
+            library('pulsar', 'io.quarkus', 'quarkus-smallrye-reactive-messaging-pulsar').versionRef('quarkus')
             library('gRPC', 'io.quarkus', 'quarkus-grpc').versionRef('quarkus')
 
             // NOTE:testcontainers

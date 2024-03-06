@@ -3,6 +3,13 @@
 - [ ] db(PostgreSQL,mongodb,redis) 
 - [ ] mq(pulsar)
 
+  # rabbitmq:
+  #     image: rabbitmq:latest
+  #     ports:
+  #         - '5672:5672'
+  #         - '15672:15672'
+  #     container_name: rabbitmq
+
 > use Flyway init db
 
 > write for quarkus
