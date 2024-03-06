@@ -18,10 +18,10 @@ public class Registration {
   @ConfigProperty(name = "consul.port")
   int port;
 
-  @ConfigProperty(name = "red-service-port", defaultValue = "9000")
+  @ConfigProperty(name = "red-service-port", defaultValue = "10000")
   int red;
 
-  @ConfigProperty(name = "blue-service-port", defaultValue = "9001")
+  @ConfigProperty(name = "blue-service-port", defaultValue = "10001")
   int blue;
 
 
