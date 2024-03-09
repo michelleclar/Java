@@ -12,9 +12,6 @@ import java.util.Map;
 import org.carl.commons.config.DB;
 import org.carl.commons.config.DataSource;
 import org.carl.commons.fields.Driver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class DBConnectPool {
   static Map<String, Map<String, HikariDataSource>> use = new HashMap<>();
 
