@@ -14,8 +14,6 @@ public class 围棋的气 {
   static Scanner in = new Scanner(System.in);
 
   public static void main(String[] args) {
-    // dp [b][w]
-
     // put(m, 0);
     // put(m, 1);
     Point b_point_1 = new Point(0, 5);
@@ -34,59 +32,80 @@ public class 围棋的气 {
     l.add(e1);
     l.add(e2);
     l.add(e3);
-    int[][] dp = new int[l.size() + 1][l.size() + 1];
-    for (int j = 0; j < l.size(); j++) {
+    Set<Point> w_s = new HashSet<>();
 
-      int c_w = count(l.get(j).w);
-      int c_b = count(l.get(j).b);
+    Set<Point> b_s = new HashSet<>();
+    for (Entry entry : l) {
+      count(w_s, entry.w);
+      count(b_s, entry.b);
     }
-    l.forEach(o -> {
-    });
+    System.out.println("write: " + w_s.size());
+
+    System.out.println("blac: " + b_s.size());
 
     in.close();
   }
 
-  private static int count(Point b) {
-    // 0,0 0,18 18,18 18,0
-    Set<Point> s = new HashSet<>();
+  static void count(Set<Point> s, Point b) {
     s.remove(b);
+    // 0,0
     if (b.x == 0 && b.y == 0) {
       s.add(new Point(0, 1));
       s.add(new Point(1, 0));
+      return;
     }
+    // 18.18
     if (b.x == 18 && b.y == 18) {
       s.add(new Point(17, 18));
       s.add(new Point(18, 17));
+      return;
     }
+    // 0,18
     if (b.x == 0 && b.y == 18) {
       s.add(new Point(0, 17));
       s.add(new Point(1, 18));
+      return;
     }
+    // 18,0
     if (b.x == 18 && b.y == 0) {
       s.add(new Point(18, 1));
       s.add(new Point(17, 0));
+      return;
     }
-
-    if (b.x == 0 && b.y != 0 && b.y != 18) {
-      s.add(new Point(b.x +1, b.y))
-        s.add(new Point(x, y))
+    // 0,(1-17)
+    if (b.x == 0) {
+      s.add(new Point(b.x + 1, b.y));
+      s.add(new Point(b.x, b.y + 1));
+      s.add(new Point(b.x, b.y - 1));
+      return;
     }
-
-    if (b.y == 0 && b.x != 0 && b.x != 18) {
-    }
-if(b.x == 18 && b.y != 0 && b.y != 18){
-
-    }
-if(b.y == 18 && b.x != 0 && b.x != 18){
-
-    }
-
-    if (b.x != 0 && b.x != 18 && b.y != 18 && b.x != 0) {
+    // (1,17),0
+    if (b.y == 0) {
+      s.add(new Point(b.x, b.y + 1));
       s.add(new Point(b.x + 1, b.y));
       s.add(new Point(b.x - 1, b.y));
-      s.add(new Point(b.x, b.y - 1));
-      s.add(new Point(b.x, b.y + 1));
+      return;
     }
+    // 18,(1,17)
+    if (b.x == 18) {
+      s.add(new Point(b.x - 1, b.y));
+      s.add(new Point(b.x, b.y + 1));
+      s.add(new Point(b.x, b.y - 1));
+      return;
+    }
+    // (1,17),18
+    if (b.y == 18) {
+      s.add(new Point(b.x, b.y - 1));
+      s.add(new Point(b.x + 1, b.y));
+      s.add(new Point(b.x - 1, b.y));
+      return;
+    }
+    // (1,17)(1,17)
+    s.add(new Point(b.x + 1, b.y));
+    s.add(new Point(b.x - 1, b.y));
+    s.add(new Point(b.x, b.y - 1));
+    s.add(new Point(b.x, b.y + 1));
+
   }
 
   static void put(Map<Integer, List<Point>> m, int i) {
@@ -108,6 +127,7 @@ if(b.y == 18 && b.x != 0 && b.x != 18){
       this.b = b;
     }
   }
+
 
   static class Point {
     int x;
