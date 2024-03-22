@@ -59,14 +59,8 @@ public class 用连续自然数之和来表达整数 {
       total += i;
     }
 
-    void clear(int i) {
-      Integer sumFirst = sum.getFirst();
-      total -= sumFirst;
-      sum.remove(sumFirst);
-      add(i);
-    }
     void clear() {
-      Integer sumFirst = sum.getFirst();
+      Integer sumFirst = sum.get(0);
       total -= sumFirst;
       sum.remove(sumFirst);
     }
