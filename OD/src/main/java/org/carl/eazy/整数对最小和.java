@@ -18,6 +18,7 @@ public class 整数对最小和 {
     }
     int k = in.nextInt();
     System.out.println(minSum(array1, array2, k));
+    in.close();
   }
 
   public static int minSum(int[] array1, int[] array2, int k) {
