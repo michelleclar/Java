@@ -26,8 +26,14 @@ public class 分割均衡字符串 {
       Count count = new Count(count_x, count_y);
       result.add(count);
     }
-    for (int i = 0; i < result.size(); i++) {
+    int index = 0;
+    index = calc(result, index);
+    int r = 0;
+    while (index != -1) {
+      r++;
+      index = calc(result, index + 1);
     }
+    System.out.println(r);
   }
 
   static int calc(List<Count> list, int index) {
@@ -40,8 +46,11 @@ public class 分割均衡字符串 {
       Count _c = list.get(i);
       int count_x = _c.X - c.X;
       int count_y = _c.Y - c.Y;
+      if (count_y == 0 || count_x == 0)
+        continue;
+
       if (count_y == count_x)
-        return index;
+        return i;
     }
     return -1;
   }
