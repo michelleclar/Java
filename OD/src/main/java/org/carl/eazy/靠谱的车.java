@@ -4,7 +4,9 @@ import java.util.Scanner;
 
 public class 靠谱的车 {
   static Scanner in = new Scanner(System.in);
-static int i = 1;
+  static int i = 1;
+
+  // 50 4 14 24 34 40
   public static void main(String[] args) {
     int result = in.nextInt();
     int temp = result;
@@ -18,18 +20,10 @@ static int i = 1;
       }
       i++;
     }
-
-    // for (; i < temp; i++) {
-    //   result++;
-    //   String s = String.valueOf(i);
-    //   if (s.contains("4")) {
-    //     calc(s, i);
-    //   }
-    // }
     System.out.println(result);
   }
 
-  static void calc(String s ){
+  static void calc(String s) {
     char[] charArray = s.toCharArray();
     for (int j = charArray.length - 1; j >= 0; j--) {
       if (charArray[j] == '4') {
