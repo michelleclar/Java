@@ -21,7 +21,10 @@ public class 可以组成网络的服务器 {
     List<Integer> results = new ArrayList<Integer>();
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < m; j++) {
-        if (arr[i][j] == 1) results.add(calc(i, j, arr, 1));
+        if (arr[i][j] == 1) {
+          arr[i][j] = 0;
+          results.add(calc(i, j, arr, 1));
+        }
       }
     }
   }
@@ -30,7 +33,12 @@ public class 可以组成网络的服务器 {
     if (i < n && j < m) return result;
 
     if (arr[i][j] == 0) return result;
-    if (arr[i][j] == 1) {}
+    if (arr[i][j] == 1) {
+      return calc(i, j + 1, arr, result)
+          + calc(i + 1, j, arr, result)
+          + calc(i - 1, j, arr, result)
+          + calc(i, j - 1, arr, result);
+    }
     return result;
   }
 }
