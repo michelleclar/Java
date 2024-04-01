@@ -9,36 +9,87 @@ public class 符号运算 {
   public static void main(String[] args) {
     String line = in.nextLine();
     line = line.replace(" ", "");
+    System.out.println(calc(line.toCharArray()));
+  }
+
+  static Fraction calc(char[] charArray) {
     Stack<Fraction> s1 = new Stack<>();
     Stack<Character> s2 = new Stack<>();
-    char[] charArray = line.toCharArray();
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < charArray.length; i++) {
       char c = charArray[i];
       if (c == '(') {
-      }
+        Stack<Character> stack = new Stack<>();
+        stack.push(charArray[i]);
+        StringBuilder sb1 = new StringBuilder();
+        i++;
+        while (!stack.isEmpty()) {
+          if (i >= charArray.length) {
+            break;
+          }
 
+          if (charArray[i] == ')') {
+            stack.pop();
+            continue;
+          }
+
+          if (charArray[i] == '(') {
+            stack.push('(');
+          }
+          sb1.append(charArray[i]);
+          i++;
+        }
+
+        Fraction f = calc(sb1.toString().toCharArray());
+        s1.push(f);
+        continue;
+      }
       if (c == '*') {
+
+        Fraction f = null;
         if (!sb.isEmpty()) {
           int before = Integer.parseInt(sb.toString());
           sb.delete(0, sb.length());
           s1.add(new Fraction(before * before, before));
         }
-        // i++;
-        // c = charArray[i];
         while (++i < charArray.length && Character.isDigit(charArray[i])) {
           sb.append(charArray[i]);
         }
+        if (charArray[i] == '(') {
+          Stack<Character> stack = new Stack<>();
+          stack.push(charArray[i]);
+          StringBuilder sb1 = new StringBuilder();
+          while (!stack.isEmpty()) {
+            if (i >= charArray.length) {
+              break;
+            }
+
+            if (charArray[i] == ')') {
+              stack.pop();
+            }
+
+            if (charArray[i] == '(') {
+              stack.push('(');
+            }
+            sb1.append(charArray[i]);
+            i++;
+          }
+
+          f = calc(sb1.toString().toCharArray());
+        }
         i--;
         Fraction pop = s1.pop();
-        int after = Integer.parseInt(sb.toString());
+        if (f == null) {
+          int after = Integer.parseInt(sb.toString());
 
-        sb.delete(0, sb.length());
-        Fraction f = new Fraction(after * after, after);
+          sb.delete(0, sb.length());
+          f = new Fraction(after * after, after);
+        }
         s1.push(pop.mult(f));
         continue;
       }
       if (c == '/') {
+        Fraction f = null;
         if (!sb.isEmpty()) {
           int before = Integer.parseInt(sb.toString());
           sb.delete(0, sb.length());
@@ -47,12 +98,39 @@ public class 符号运算 {
         while (++i < charArray.length && Character.isDigit(charArray[i])) {
           sb.append(charArray[i]);
         }
+        if (charArray[i] == '(') {
+          Stack<Character> stack = new Stack<>();
+          stack.push(charArray[i]);
+          StringBuilder sb1 = new StringBuilder();
+          while (!stack.isEmpty()) {
+            if (i >= charArray.length) {
+              break;
+            }
+
+            if (charArray[i] == ')') {
+              stack.pop();
+            }
+
+            if (charArray[i] == '(') {
+              stack.push('(');
+            }
+            sb1.append(charArray[i]);
+            i++;
+          }
+
+          f = calc(sb1.toString().toCharArray());
+        }
         i--;
         Fraction pop = s1.pop();
-        int after = Integer.parseInt(sb.toString());
+        if (f == null) {
+          int after = Integer.parseInt(sb.toString());
+          sb.delete(0, sb.length());
+          f = new Fraction(after * after, after);
+        }
+        i--;
+        if (f.denominator == 0)
+          return null;
 
-        sb.delete(0, sb.length());
-        Fraction f = new Fraction(after * after, after);
         s1.push(pop.div(f));
 
         continue;
@@ -75,18 +153,18 @@ public class 符号运算 {
       s1.push(new Fraction(int1 * int1, int1));
     }
     while (!s2.isEmpty()) {
-      Fraction pop = s1.pop();
-      Character pop2 = s2.pop();
-      Fraction pop3 = s1.pop();
+      Fraction pop = s1.removeFirst();
+      Character pop2 = s2.removeFirst();
+      Fraction pop3 = s1.removeFirst();
       Fraction f;
       if (pop2.equals('-')) {
-        f = pop3.sub(pop);
+        f = pop.sub(pop3);
       } else {
-        f = pop3.add(pop);
+        f = pop.add(pop3);
       }
       s1.push(f);
     }
-    System.out.println(s1.pop());
+    return s1.pop();
   }
 
   static class Fraction {
@@ -161,12 +239,5 @@ public class 符号运算 {
       this.denominator /= lcm;
     }
 
-    // 通分
-    public Fraction toCommonDenominator(Fraction other) {
-      int commonDenominator = lcm(denominator, other.denominator);
-      int newNumerator = numerator * (commonDenominator / denominator);
-      int otherNumerator = other.numerator * (commonDenominator / other.denominator);
-      return new Fraction(newNumerator, commonDenominator);
-    }
   }
 }
