@@ -1,5 +1,7 @@
 package org.carl.hard;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -13,8 +15,8 @@ public class 符号运算 {
   }
 
   static Fraction calc(char[] charArray) {
-    Stack<Fraction> s1 = new Stack<>();
-    Stack<Character> s2 = new Stack<>();
+    Deque<Fraction> s1 = new ArrayDeque<>();
+    Deque<Character> s2 = new ArrayDeque<>();
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < charArray.length; i++) {
       char c = charArray[i];
@@ -238,6 +240,5 @@ public class 符号运算 {
 
       this.denominator /= lcm;
     }
-
   }
 }
