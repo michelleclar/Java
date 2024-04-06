@@ -9,5 +9,6 @@ public class 孙悟空吃蟠桃 {
   public static void main(String[] args) {
     String line = in.nextLine();
     int[] is = Utils.parse(line);
+    int N = in.nextInt();
   }
 }
