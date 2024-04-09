@@ -16,7 +16,6 @@ public class 内存冷热标记 {
     for (int i = 0; i < N; i++) {
       int i1 = in.nextInt();
       m.merge(i1, 1, Integer::sum);
-
     }
     int K = in.nextInt();
     List<Page> r = new ArrayList<>();
@@ -29,15 +28,15 @@ public class 内存冷热标记 {
         r.add(p);
       }
     }
-    r.sort((o1, o2) -> {
-      if (o1.count == o2.count) {
-        return o1.index - o2.index;
-      }
-      return o2.count - o1.count;
-    });
+    r.sort(
+        (o1, o2) -> {
+          if (o1.count == o2.count) {
+            return o1.index - o2.index;
+          }
+          return o2.count - o1.count;
+        });
     System.out.println(r.size());
     System.out.println(r);
-
   }
 
   static class Page {
@@ -48,7 +47,5 @@ public class 内存冷热标记 {
     public String toString() {
       return index + "";
     }
-
-
   }
 }
