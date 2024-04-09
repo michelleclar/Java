@@ -9,6 +9,7 @@ dependencies {
     implementation enforcedPlatform(libs.quarkusPlaform)
     // implementation 'io.quarkus:quarkus-vertx-graphql'
     implementation libs.bundles.quarkus
+    implementation libs.quarkusSmallryeOpenapi
     implementation libs.bundles.base
     implementation libs.assured
     testCompileOnly libs.bundles.test

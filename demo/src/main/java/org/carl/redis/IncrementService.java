@@ -1,18 +1,25 @@
 package org.carl.redis;
 
+import io.quarkus.redis.client.reactive.ReactiveRedisClient;
 import io.quarkus.redis.datasource.ReactiveRedisDataSource;
 import io.quarkus.redis.datasource.RedisDataSource;
 import io.quarkus.redis.datasource.keys.ReactiveKeyCommands;
 import io.quarkus.redis.datasource.string.StringCommands;
 import io.smallrye.mutiny.Uni;
+import io.vertx.redis.client.impl.RedisClient;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import java.util.List;
 
 @Singleton
-class IncrementService {
+public class IncrementService {
 
   private ReactiveKeyCommands<String> keys;
-  private StringCommands<String, Integer> counter;
+  private final StringCommands<String, Integer> counter;
+  @Inject
+  RedisClient redisClient;
+  @Inject
+  ReactiveRedisDataSource  reactiveRedisDataSource;
 
   public IncrementService(RedisDataSource redisDS, ReactiveRedisDataSource reactiveRedisDS) {
     keys = reactiveRedisDS.key();

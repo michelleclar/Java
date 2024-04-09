@@ -24,4 +24,5 @@
  Architecture: x86_64
  CPUs: 12
  Total Memory: 15.54GiB
-xxxxxxxxxx2 1背景 目标 担任角色 过程 发生了什么 起到的作用 结果 对比行业 评价 收获 2管理 
+xxxxxxxxxx2 1背景 目标 担任角色 过程 发生了什么 起到的作用 结果 对比行业 评价 收获 2管理
+ j 
