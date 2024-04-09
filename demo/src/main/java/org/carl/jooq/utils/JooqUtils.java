@@ -1,5 +1,7 @@
 package org.carl.jooq.utils;
 
+import org.eclipse.microprofile.config.ConfigProvider;
+
 import java.io.BufferedWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
