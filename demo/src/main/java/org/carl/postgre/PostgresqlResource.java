@@ -2,7 +2,7 @@ package org.carl.postgre;
 
 import java.util.List;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.gen.postgres.Tables;
+
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;

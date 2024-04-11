@@ -16,10 +16,6 @@ public class IncrementService {
 
   private ReactiveKeyCommands<String> keys;
   private final StringCommands<String, Integer> counter;
-  @Inject
-  RedisClient redisClient;
-  @Inject
-  ReactiveRedisDataSource  reactiveRedisDataSource;
 
   public IncrementService(RedisDataSource redisDS, ReactiveRedisDataSource reactiveRedisDS) {
     keys = reactiveRedisDS.key();
