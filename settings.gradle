@@ -74,6 +74,8 @@ dependencyResolutionManagement {
 
             library('assured', 'io.rest-assured', 'rest-assured').versionRef('quarkus')
 
+            library('quarkusSmallryeOpenapi', 'io.quarkus', 'quarkus-smallrye-openapi').versionRef('quarkus')
+
             // NOTE:bundles
             bundle('quarkus', ['quarkusResteasyReactiveJackson', 'quarkusArc', 'quarkusJunit5'])
 
