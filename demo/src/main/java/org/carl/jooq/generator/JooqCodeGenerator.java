@@ -1,17 +1,11 @@
 package org.carl.jooq.generator;
 
-import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.ConfigProvider;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jooq.codegen.GenerationTool;
-import org.jooq.meta.jaxb.Configuration;
-import org.jooq.meta.jaxb.Database;
-import org.jooq.meta.jaxb.Generate;
-import org.jooq.meta.jaxb.Generator;
-import org.jooq.meta.jaxb.Jdbc;
-import org.jooq.meta.jaxb.Target;
+import org.jooq.meta.jaxb.*;
 
 public class JooqCodeGenerator {
+
 
   static String jdbcUrl = ConfigProvider.getConfig().getValue("quarkus.datasource.jdbc.url", String.class);
 
@@ -24,6 +18,7 @@ public class JooqCodeGenerator {
     // Generate JOOQ code programmatically
     Configuration configuration =
         new Configuration()
+                .withLogging(Logging.DEBUG)
             .withJdbc(
                 new Jdbc()
                     .withDriver("org.postgresql.Driver")
@@ -44,7 +39,7 @@ public class JooqCodeGenerator {
                             .withDaos(true)) // 生成DAO类
                     .withTarget(
                         new Target()
-                            .withPackageName("org.carl.generated") // 生成类的包名
+                            .withPackageName("org.carl.generated.db") // 生成类的包名
                             .withDirectory("src/main/generated"))); // 生成类的输出目录
 
     GenerationTool.generate(configuration);
