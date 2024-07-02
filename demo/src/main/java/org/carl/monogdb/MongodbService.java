@@ -1,17 +1,18 @@
 package org.carl.monogdb;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.bson.Document;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
+import org.bson.Document;
 
 @ApplicationScoped
 public class MongodbService {
-  @Inject MongoClient mongoClient;
+  @Inject
+  MongoClient mongoClient;
 
   public List<Fruit> list() {
     List<Fruit> list = new ArrayList<>();
@@ -32,10 +33,8 @@ public class MongodbService {
   }
 
   public void add(Fruit fruit) {
-    Document document =
-        new Document()
-            .append("name", fruit.getName())
-            .append("description", fruit.getDescription());
+    Document document = new Document().append("name", fruit.getName()).append("description",
+        fruit.getDescription());
     getCollection().insertOne(document);
   }
 
