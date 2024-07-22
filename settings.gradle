@@ -4,4 +4,3 @@ plugins {
 rootProject.name = 'Java'
 include 'SpringBoot'
 include 'security-jwt'
-
