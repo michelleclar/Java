@@ -5,7 +5,6 @@ import org.blog.user.model.User;
 import org.blog.user.model.response.AuthSuccessResponse;
 import org.blog.user.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
