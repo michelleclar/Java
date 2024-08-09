@@ -1,3 +1,6 @@
+plugins {
+    id("org.jooq.jooq-codegen-gradle") version "3.19.3"
+}
 dependencies {
     implementation project(path: ':common')
 
@@ -5,6 +8,57 @@ dependencies {
     implementation "org.jooq:jooq-meta:${jooqVersion}"
     implementation "org.jooq:jooq-codegen:${jooqVersion}"
     implementation 'org.yaml:snakeyaml:2.2'
-
+    jooqCodegen "org.postgresql:postgresql:${postgresqlVersion}"
     implementation "com.zaxxer:HikariCP:${hikariCPVersion}"
+}
+
+def mySrcDir = 'src/main/java'
+def generatedDir = 'src/main/generated'
+sourceSets {
+    main {
+        java {
+            srcDir generatedDir
+            srcDir mySrcDir
+        }
+    }
+}
+idea {
+    module {
+        generatedSourceDirs.addAll(file(generatedDir))
+        sourceDirs.addAll(file(generatedDir))
+        sourceDirs.addAll(file(mySrcDir))
+    }
+}
+
+jooq {
+    configuration {
+        jdbc {
+            url = "jdbc:postgresql://127.0.0.1:5432/db"
+            driver = "org.postgresql.Driver"
+            user = "root"
+            password = "root"
+        }
+        generator {
+
+            name = 'org.jooq.codegen.DefaultGenerator'
+
+            // Optional: The jooq-meta configuration, configuring the information schema source.
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                inputSchema = 'public'
+            }
+
+            // Optional: The jooq-codegen configuration, configuring the generated output content.
+            generate {
+                pojos = true
+                daos = true
+            }
+
+            // Optional: The generation output target
+            target {
+                packageName = "org.carl.generated"
+                directory = "src/main/generated"
+            }
+        }
+    }
 }
