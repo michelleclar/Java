@@ -21,7 +21,7 @@ public class Redis {
         new Thread(() -> {
             Client.sendToRedis(new LoggingHandler(), new ChannelInboundHandlerAdapter() {
                 @Override
-                public void channelActive(ChannelHandlerContext ctx) throws Exception {
+                public void channelActive(ChannelHandlerContext ctx) {
                     ByteBuf buf = ctx.alloc().buffer();
                     buf.writeBytes("*3".getBytes());
                     buf.writeBytes(LINE);
@@ -41,7 +41,7 @@ public class Redis {
                 }
 
                 @Override
-                public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+                public void channelRead(ChannelHandlerContext ctx, Object msg) {
                     ByteBuf buf = (ByteBuf) msg;
                     System.out.println(buf.toString(Charset.defaultCharset()));
                 }
