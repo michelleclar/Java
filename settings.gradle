@@ -1,7 +1,31 @@
-plugins {
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+pluginManagement {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
+//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+//        maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
+        gradlePluginPortal()
+        mavenCentral()
+        maven { url 'https://repo.spring.io/milestone' }
+    }
+    plugins {
+        id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+    }
+}
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs{
+            version('guava','33.3.1-jre')
+            library('localCache','com.google.guava','guava').versionRef('guava')
+            library('caffeine','com.github.ben-manes.caffeine','caffeine').version('3.1.8')
+// https://mvnrepository.com/artifact/org.ehcache/ehcache
+            library('ehcache','org.ehcache','ehcache').version('3.10.8')
+        }
+    }
 }
 rootProject.name = 'Java'
-include 'Jdk-21'
-include 'Jdk-17'
+include 'localCache-useGuava'
+include 'useCaffine'
+include 'useEhcache'
 
