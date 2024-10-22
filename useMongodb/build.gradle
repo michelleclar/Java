@@ -1,0 +1,5 @@
+//https://www.mongodb.com/zh-cn/docs/drivers/java/sync/current/
+dependencies {
+    implementation libs.mongo
+    implementation libs.pool
+}
