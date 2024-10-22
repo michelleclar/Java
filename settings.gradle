@@ -1,13 +1,41 @@
-plugins {
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+pluginManagement {
+    repositories {
+
+        maven { url 'https://maven.aliyun.com/repository/central' }
+//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+//        maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
+        gradlePluginPortal()
+        mavenCentral()
+        maven { url 'https://repo.spring.io/milestone' }
+    }
+    plugins {
+        id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+    }
+}
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            library('mysql', 'com.mysql', 'mysql-connector-j').version('9.0.0')
+            library('postgresql', 'org.postgresql', 'postgresql').version('42.7.4')
+            // https://mvnrepository.com/artifact/org.jooq/jooq
+            library('jooq', 'org.jooq', 'jooq').version('3.19.12')
+            library('hikariCp', 'com.zaxxer', 'HikariCP').version('6.0.0')
+            // https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync
+            library('mongo', 'org.mongodb', 'mongodb-driver-sync').version('5.2.0')
+            // https://mvnrepository.com/artifact/org.apache.commons/commons-pool2
+            library('pool', 'org.apache.commons', 'commons-pool2').version('2.12.0')
+            // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+            library('slf4j', 'org.slf4j', 'slf4j-api').version('2.1.0-alpha1')
+
+
+        }
+    }
 }
 rootProject.name = 'Java'
-include 'ORM'
-include 'ORM:JOOQ'
-findProject(':ORM:JOOQ')?.name = 'JOOQ'
-include 'ORM:Mybatis'
-findProject(':ORM:Mybatis')?.name = 'Mybatis'
-include 'ORM:Mybatis-plus'
-findProject(':ORM:Mybatis-plus')?.name = 'Mybatis-plus'
 include 'common'
+include 'useMysql'
+include 'usePostgresql'
+include 'useMongodb'
 

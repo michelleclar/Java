@@ -10,34 +10,33 @@ ext {
     hikariCPVersion = "5.1.0"
     mariadbVersion = '3.3.2'
 }
-
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'idea'
-    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
-    group 'org.carl'
+    group 'org.carl.study'
     version '1.0.0'
-
     repositories {
-        mavenLocal()
         maven { url 'https://maven.aliyun.com/repository/central' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        mavenCentral()
+    }
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
+    compileJava {
+        options.encoding = 'UTF-8'
+        options.compilerArgs << '-parameters'
+    }
+
+    compileTestJava {
+        options.encoding = 'UTF-8'
+    }
+    javadoc.options.encoding = 'UTF-8'
     dependencies {
-
-//        implementation 'org.slf4j:slf4j-api:1.7.32'
-        implementation 'org.slf4j:slf4j-simple:2.0.12'
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-
-        implementation "org.postgresql:postgresql:${postgresqlVersion}"
-        runtimeOnly "mysql:mysql-connector-java:${mysqlVersion}"
-
-        implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.2'
+        implementation project(':common')
+        testImplementation platform('org.junit:junit-bom:5.11.2')
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+        implementation libs.slf4j
     }
 
-    test {
-        useJUnitPlatform()
-    }
 }
