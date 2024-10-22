@@ -24,7 +24,7 @@ public class JedisPoolConfig extends GenericObjectPoolConfig<Jedis> {
     setTestWhileIdle(true);
     setTestWhileIdle(true);
 
-    // suggest enable and redis need
+    // suggest enable
     setJmxEnabled(true);
   }
 }

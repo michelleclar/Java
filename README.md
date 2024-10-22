@@ -8,5 +8,7 @@
 
 ### mid cache
 - redis
+
+### DB
 - elasticsearch
 - Doris

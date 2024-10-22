@@ -38,7 +38,7 @@ public class RedisTool {
   }
 
   public static String get(String key) {
-    return executors(j -> {
+    return executor(j -> {
       return j.get(key);
     }).orElseGet(() -> {
       // Cache miss,get value from db
@@ -46,7 +46,7 @@ public class RedisTool {
     });
   }
 
-  public static <T> Optional<T> executors(Function<Jedis, T> function) {
+  public static <T> Optional<T> executor(Function<Jedis, T> function) {
     try (Jedis j = jedisPool.getResource()) {
       return Optional.ofNullable(function.apply(j));
     } catch (JedisConnectionException e) {
@@ -58,7 +58,7 @@ public class RedisTool {
   }
 
   public static void put(String k, String v) {
-    executors(j -> {
+    executor(j -> {
       return j.set(k, v);
     }).ifPresentOrElse(_v -> {
       // log successful set cache
@@ -71,7 +71,7 @@ public class RedisTool {
   }
 
   public static void remove(String k) {
-    executors(j -> {
+    executor(j -> {
       return j.del(k);
     }).ifPresentOrElse(v -> {
       if (v == 1) {
@@ -86,7 +86,7 @@ public class RedisTool {
   }
 
   public static void expire(String k, int seconds) {
-    executors(j -> j.expire(k, seconds)).ifPresentOrElse(v -> {
+    executor(j -> j.expire(k, seconds)).ifPresentOrElse(v -> {
       if (v == 1) {
         logger.info("Successfully set expiration for key: {} to {} seconds", k, seconds);
       } else {
