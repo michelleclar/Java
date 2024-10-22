@@ -1,0 +1,90 @@
+plugins {
+    id 'idea'
+    id 'nu.studer.jooq' version '9.0'
+}
+
+dependencies {
+    implementation libs.jooq
+    implementation libs.postgresql
+    jooqGenerator libs.postgresql
+
+}
+
+
+def mySrcDir = 'src/main/java'
+def generatedDir = 'src/main/generated'
+sourceSets {
+    main {
+        java {
+            srcDir generatedDir
+            srcDir mySrcDir
+        }
+    }
+}
+idea {
+    module {
+        generatedSourceDirs.addAll(file(generatedDir))
+        sourceDirs.addAll(file(generatedDir))
+        sourceDirs.addAll(file(mySrcDir))
+    }
+}
+
+import nu.studer.gradle.jooq.JooqEdition
+import org.jooq.meta.jaxb.Logging
+
+jooq {
+    version = '3.19.12'
+    edition = JooqEdition.OSS
+
+    configurations {
+        main {
+            generationTool {
+                logging = Logging.WARN
+                jdbc {
+                    driver = 'org.postgresql.Driver'
+                    url = 'jdbc:postgresql://localhost:15432/db'
+                    user = 'root'
+                    password = 'root'
+                    properties {
+                        property {
+                            key = 'ssl'
+                            value = 'false'
+                        }
+                    }
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        name = 'org.jooq.meta.postgres.PostgresDatabase'
+                        inputSchema = 'public'
+//                        forcedTypes {
+//                            forcedType {
+//                                name = 'varchar'
+//                                includeExpression = '.*'
+//                                includeTypes = 'JSONB?'
+//                            }
+//                            forcedType {
+//                                name = 'varchar'
+//                                includeExpression = '.*'
+//                                includeTypes = 'INET'
+//                            }
+//                        }
+                    }
+                    generate {
+                        deprecated = false
+                        records = true
+                        immutablePojos = true
+                        fluentSetters = true
+                        pojos = true
+                        daos = true
+                    }
+                    target {
+                        packageName = 'org.carl.generated'
+                        directory = 'src/main/generated'
+                    }
+                    strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
+                }
+            }
+        }
+    }
+}
