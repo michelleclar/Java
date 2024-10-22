@@ -2,10 +2,6 @@ drop table if exists "user";
 CREATE TABLE "user" (
     id SERIAL PRIMARY KEY,
     user_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL,
-    phone_number VARCHAR(20),
-    version INT NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
