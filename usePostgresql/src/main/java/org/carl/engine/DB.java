@@ -8,7 +8,4 @@ public class DB extends BasicDB {
         super(new DataSourceProperties().setJdbcUrl("jdbc:postgresql://localhost:15432/db").setPassword("root").setUserName("root").setDriverName("org.postgresql.Driver"));
     }
 
-    DB(DataSourceProperties d) {
-        super(d);
-    }
 }
