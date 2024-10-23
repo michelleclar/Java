@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-public class TestSelect {
+public class SelectTest {
     @BeforeAll
     public static void before() {
         User user = new User(1, "sdad", LocalDateTime.now(), LocalDateTime.now());
