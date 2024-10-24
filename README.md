@@ -1,20 +1,36 @@
-# Java
+# JAVA NOTE
 
-Java 学习代码
 
-> 项目 各方面评价 0-5 个人观点
-> 美观 3
-> 功能 4
-> 速度 4.5
-> 稳定性 5
+### Cache
+> change branch to cache
 
-### 集群和分布式
+### DB
+> change branch to datebase
 
-集群： main 方法
-分布式： 解耦
-QPS
-TPS
-pom --> build.gradle
-gradle init --type pom
+### MQ
+> change branch to mq
 
-build.gradle ---> pom.xml
+### grpc
+> change branch to grpc
+
+### TaskFlow
+> change branch to taskflow
+
+### Quarkus
+> change branch to quarkus
+
+### Spring
+> change branch to spring
+
+### Netty
+> change branch to Netty
+
+### dubbo
+> change branch to dubbo
+
+### Vert.x
+> change branch to vertx
+
+
+
+
