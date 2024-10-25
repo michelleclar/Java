@@ -1,0 +1,5 @@
+dependencies {
+    implementation libs.rabbitmq
+    implementation libs.jackson
+    implementation libs.pool
+}
