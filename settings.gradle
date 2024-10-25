@@ -1,6 +1,35 @@
-plugins {
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+pluginManagement {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
+//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+//        maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
+        gradlePluginPortal()
+        mavenCentral()
+        maven { url 'https://repo.spring.io/milestone' }
+    }
+    plugins {
+        id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+    }
+}
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            // https://mvnrepository.com/artifact/com.rabbitmq/amqp-client
+            library('rabbitmq', 'com.rabbitmq', 'amqp-client').version('5.22.0')
+
+            // https://mvnrepository.com/artifact/org.apache.commons/commons-pool2
+            library('pool', 'org.apache.commons', 'commons-pool2').version('2.12.0')
+            // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+            library('slf4j-api', 'org.slf4j', 'slf4j-api').version('2.1.0-alpha1')
+            library('jackson', 'com.fasterxml.jackson.core', 'jackson-databind').version('2.17.0')
+            // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+            library('slf4j-providers', 'org.slf4j', 'slf4j-simple',).version('2.1.0-alpha1')
+            bundle('slf4j', ['slf4j-api', 'slf4j-providers'])
+        }
+    }
 }
 rootProject.name = 'Java'
-include 'SpringBoot'
+include 'useRabbitmq'
 

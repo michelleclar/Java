@@ -2,9 +2,7 @@
 
 - [ ] Kafka
 - [ ] RabbitMQ
-- [ ] ActiveMQ
 - [ ] Apache Pulsar
-- [ ] Amazon SQS
-- [ ] Google Cloud Pub/Sub
-- [ ] IBM MQ
-- [ ] RocketMQ
+
+### Version
+- rabbitMQ:4.0.2-management
