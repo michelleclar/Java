@@ -1,5 +1,37 @@
-plugins {
-    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+pluginManagement {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
+//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+//        maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
+        gradlePluginPortal()
+        mavenCentral()
+        maven { url 'https://repo.spring.io/milestone' }
+    }
+    plugins {
+        id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+    }
+}
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            version('guava', '33.3.1-jre')
+            library('localCache', 'com.google.guava', 'guava').versionRef('guava')
+            library('caffeine', 'com.github.ben-manes.caffeine', 'caffeine').version('3.1.8')
+            library('ehcache', 'org.ehcache', 'ehcache').version('3.10.8')
+            library('jedis', 'redis.clients', 'jedis').version('5.2.0')
+            library('pool', 'org.apache.commons', 'commons-pool2').version('2.12.0')
+            // https://mvnrepository.com/artifact/com.h2database/h2
+            library('h2', 'com.h2database', 'h2').version('2.3.232')
+            library('jooq', 'org.jooq', 'jooq').version('3.19.12')
+            library('hikariCp', 'com.zaxxer', 'HikariCP').version('6.0.0')
+            library('slf4j-providers', 'org.slf4j', 'slf4j-simple',).version('2.1.0-alpha1')
+            library('slf4j-api', 'org.slf4j', 'slf4j-api').version('2.1.0-alpha1')
+            bundle('slf4j', ['slf4j-api', 'slf4j-providers'])
+
+        }
+    }
 }
 rootProject.name = 'Java'
 include 'SpringBoot'
