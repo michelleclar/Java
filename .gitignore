@@ -16,3 +16,4 @@ SpringBoot/.classpath
 ORM/.classpath
 ORM/src/main/java/org/gen
 **/gen/
+*.iml
