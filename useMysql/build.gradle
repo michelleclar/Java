@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation libs.jooq
+    implementation project(':common')
     implementation libs.mysql
     jooqGenerator libs.mysql
 }
@@ -27,6 +27,11 @@ idea {
         sourceDirs.addAll(file(mySrcDir))
     }
 }
+def envProperties = new Properties()
+def envPropertiesFile = file('.env')
+envPropertiesFile.withReader('UTF-8') { reader ->
+    envProperties.load(reader)
+}
 
 import nu.studer.gradle.jooq.JooqEdition
 import org.jooq.meta.jaxb.Logging
@@ -40,9 +45,9 @@ jooq {
                 logging = Logging.WARN
                 jdbc {
                     driver = 'com.mysql.cj.jdbc.Driver'
-                    url = 'jdbc:mysql://localhost:13306/db'
-                    user = 'root'
-                    password = 'root'
+                    url = envProperties.getProperty('jdbcUrl')
+                    user = envProperties.getProperty('dbUser')
+                    password = envProperties.getProperty('dbPassword')
                     properties {
                         property {
                             key = 'ssl'
@@ -54,7 +59,7 @@ jooq {
                     name = 'org.jooq.codegen.DefaultGenerator'
                     database {
                         name = 'org.jooq.meta.mysql.MySQLDatabase'
-                        inputSchema = 'db'
+                        inputSchema = 'xjrc365-dev'
 //                        forcedTypes {
 //                            forcedType {
 //                                name = 'varchar'
@@ -71,7 +76,7 @@ jooq {
                     generate {
                         deprecated = false
                         records = true
-                        immutablePojos = true
+//                        immutablePojos = false
                         fluentSetters = true
                         pojos = true
                         daos = true
