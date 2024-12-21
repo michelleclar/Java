@@ -1,4 +1,6 @@
 dependencies {
     implementation libs.jooq
+    implementation libs.gson
+    implementation libs.bundles.xml
     implementation libs.hikariCp
 }
